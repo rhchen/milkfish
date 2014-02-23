@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/net.sf.milkfish.feature_1.0.0.qualifier.jar" id="net.sf.milkfish.feature" version="1.0.0.qualifier">
+      <category name="net.sf.milkfish.category"/>
+   </feature>
+   <category-def name="net.sf.milkfish.category" label="Milkfish Category">
+      <description>
+         Milkfish Category
+      </description>
+   </category-def>
+</site>
