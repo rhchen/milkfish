@@ -10,18 +10,22 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 
-/**
- * @author admin
- *
- */
+@RunWith(SWTBotJunit4ClassRunner.class)
 public class AboutHandlerTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+	private static SWTBot bot;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		
+		bot = new SWTBot();
+		
 	}
 
 	/**
@@ -29,6 +33,7 @@ public class AboutHandlerTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		bot.sleep(2000);
 	}
 
 	/**
@@ -51,7 +56,14 @@ public class AboutHandlerTest {
 	@Test
 	public final void testExecute() {
 		
-		assertNotEquals(1, 2);
+		for(int i=0; i<5; i++){
+			
+			bot.sleep(2000);
+			bot.menu("Help").menu("About").click();
+			bot.button("OK").click();
+		}
+		
+
 	
 	}
 

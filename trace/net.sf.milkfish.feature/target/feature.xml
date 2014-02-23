@@ -2,7 +2,7 @@
 <feature
       id="net.sf.milkfish.feature"
       label="Milk Fish Feature"
-      version="1.0.0.201402231046">
+      version="1.0.0.201402231256">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -32,9 +32,16 @@
 
    <plugin
          id="net.sf.milkfish.product"
-         download-size="11"
-         install-size="18"
-         version="1.0.0.201402231046"
+         download-size="12"
+         install-size="19"
+         version="1.0.0.201402231256"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swtbot.generator"
+         download-size="83"
+         install-size="150"
+         version="2.2.1.201402212009"
          unpack="false"/>
 
 </feature>
