@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: POM Parent
+Bundle-SymbolicName: net.sf.milkfish.parent
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: net.sf.milkfish
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

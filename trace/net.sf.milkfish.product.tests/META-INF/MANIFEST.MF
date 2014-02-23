@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Product Tests
+Bundle-SymbolicName: net.sf.milkfish.product.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: net.sf.milkfish
+Fragment-Host: net.sf.milkfish.product;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit
