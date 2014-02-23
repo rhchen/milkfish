@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: MyTourbook Commons
+Bundle-SymbolicName: net.tourbook.common;singleton:=true
+Bundle-Version: 14.2.0.qualifier
+Bundle-Activator: net.tourbook.common.CommonActivator
+Bundle-Vendor: MyTourbook
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: net.tourbook.common,
+ net.tourbook.common.action,
+ net.tourbook.common.color,
+ net.tourbook.common.form,
+ net.tourbook.common.map,
+ net.tourbook.common.preferences,
+ net.tourbook.common.tooltip,
+ net.tourbook.common.util,
+ net.tourbook.common.weather,
+ net.tourbook.common.widgets
+Import-Package: gnu.trove.map.hash,
+ org.joda.time
