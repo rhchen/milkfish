@@ -47,5 +47,6 @@
   <modules>
   	<module>../net.sf.milkfish.product</module>
   	<module>../net.sf.milkfish.product.tests</module>
+  	<module>../net.sf.milkfish.feature</module>
   </modules>
 </project>
