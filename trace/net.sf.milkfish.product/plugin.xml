@@ -6,7 +6,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             name="net.sf.milkfish.product"
-            application="org.eclipse.e4.ui.workbench.swt.E4Application">
+            application="net.sf.milkfish.product.application">
          <property
                name="applicationCSS"
                value="platform:/plugin/net.sf.milkfish.product/css/default.css">
@@ -15,7 +15,26 @@
                name="appName"
                value="net.sf.milkfish.product">
          </property>
+         <property
+               name="applicationXMI"
+               value="net.sf.milkfish.product/Application.e4xmi">
+         </property>
+         <property
+               name="clearPersistedState"
+               value="true">
+         </property>
       </product>
    </extension>
-
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="net.sf.milkfish.product.application.Application">
+         </run>
+      </application>
+   </extension>
 </plugin>

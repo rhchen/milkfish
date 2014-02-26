@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_qUF2wJvBEeOju7PEXqMTcg" elementId="org.eclipse.e4.ide.application" bindingContexts="_qUF2yZvBEeOju7PEXqMTcg">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_qUF2wZvBEeOju7PEXqMTcg" label="net.sf.milkfish.product" width="500" height="400">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_qUF2wZvBEeOju7PEXqMTcg" label="net.sf.milkfish.product" width="1280" height="768">
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_qUGd5JvBEeOju7PEXqMTcg">
       <children xsi:type="advanced:Perspective" xmi:id="_qUGd5ZvBEeOju7PEXqMTcg">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_qUGd5pvBEeOju7PEXqMTcg">
-          <children xsi:type="basic:PartStack" xmi:id="_qUHE4JvBEeOju7PEXqMTcg">
-            <children xsi:type="basic:Part" xmi:id="_qUHE4ZvBEeOju7PEXqMTcg" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.parts.SamplePart" label="Sample Part"/>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_qUGd5pvBEeOju7PEXqMTcg" elementId="" containerData="10000">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_bkf58J7vEeOsYpGGoUrbcw" elementId="" containerData="7000" horizontal="true">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_y-gGQJ7vEeOsYpGGoUrbcw" elementId="" containerData="2000">
+              <children xsi:type="basic:PartStack" xmi:id="_qUHE4JvBEeOju7PEXqMTcg" containerData="3000">
+                <children xsi:type="basic:Part" xmi:id="_qUHE4ZvBEeOju7PEXqMTcg" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.parts.SamplePart" label="Sample Part"/>
+              </children>
+              <children xsi:type="basic:PartStack" xmi:id="_KsuPEJ7wEeOsYpGGoUrbcw" elementId="" containerData="7000">
+                <children xsi:type="advanced:Placeholder" xmi:id="_jddk0J7wEeOsYpGGoUrbcw" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_8abDkJ7uEeOsYpGGoUrbcw" closeable="true"/>
+              </children>
+            </children>
+            <children xsi:type="advanced:Placeholder" xmi:id="_KSgeoJ74EeOsYpGGoUrbcw" elementId="org.eclipse.ui.editorss" containerData="8000" ref="_Ap_bUJ7vEeOsYpGGoUrbcw" closeable="true"/>
+          </children>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_dEcpwJ7vEeOsYpGGoUrbcw" elementId="" containerData="3000" horizontal="true">
+            <children xsi:type="basic:PartStack" xmi:id="_us1AQJ7wEeOsYpGGoUrbcw" elementId="">
+              <children xsi:type="advanced:Placeholder" xmi:id="_0aFeAJ7wEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.PropertySheet" ref="_esCIEJ7uEeOsYpGGoUrbcw" closeable="true"/>
+            </children>
+            <children xsi:type="basic:PartStack" xmi:id="_vPmWIJ7wEeOsYpGGoUrbcw" elementId="">
+              <children xsi:type="advanced:Placeholder" xmi:id="_3-nUsJ7wEeOsYpGGoUrbcw" elementId="org.eclipse.ui.console.ConsoleView" ref="_znGz0J7uEeOsYpGGoUrbcw" closeable="true"/>
+              <children xsi:type="advanced:Placeholder" xmi:id="_B6CcAJ7xEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.ProgressView" ref="_pCu2IJ7uEeOsYpGGoUrbcw" closeable="true"/>
+            </children>
           </children>
         </children>
       </children>
@@ -21,6 +38,41 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_ISCw0JyJEeO2-aLtzkRuAg" elementId="" label="Record" command="_2RhKoJyIEeO2-aLtzkRuAg"/>
       </children>
     </mainMenu>
+    <sharedElements xsi:type="advanced:Area" xmi:id="_Ap_bUJ7vEeOsYpGGoUrbcw" elementId="org.eclipse.ui.editorss">
+      <children xsi:type="basic:PartStack" xmi:id="_IT9dYJ7vEeOsYpGGoUrbcw" elementId="org.eclipse.e4.primaryDataStack"/>
+    </sharedElements>
+    <sharedElements xsi:type="basic:Part" xmi:id="_esCIEJ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.PropertySheet" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="%Views.PropertySheet" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/prop_ps.gif" tooltip="PropertySheet" closeable="true">
+      <tags>View</tags>
+      <tags>categoryTag:org.eclipse.ui</tags>
+      <menus xmi:id="_esCvIJ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.PropertySheet">
+        <tags>ViewMenu</tags>
+      </menus>
+      <toolbar xmi:id="_esCvIZ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.PropertySheet"/>
+    </sharedElements>
+    <sharedElements xsi:type="basic:Part" xmi:id="_pCu2IJ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.ProgressView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="%Views.Progress" iconURI="platform:/plugin/org.eclipse.ui.ide/icons/full/eview16/pview.gif" tooltip="ProgressView" closeable="true">
+      <tags>View</tags>
+      <tags>categoryTag:org.eclipse.ui</tags>
+      <menus xmi:id="_pCu2IZ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.ProgressView">
+        <tags>ViewMenu</tags>
+      </menus>
+      <toolbar xmi:id="_pCu2Ip7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.ProgressView"/>
+    </sharedElements>
+    <sharedElements xsi:type="basic:Part" xmi:id="_znGz0J7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="%ConsoleView.name" iconURI="platform:/plugin/org.eclipse.ui.console/icons/full/cview16/console_view.gif" tooltip="ConsoleView" closeable="true">
+      <tags>View</tags>
+      <tags>categoryTag:org.eclipse.ui</tags>
+      <menus xmi:id="_znGz0Z7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.console.ConsoleView">
+        <tags>ViewMenu</tags>
+      </menus>
+      <toolbar xmi:id="_znGz0p7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.console.ConsoleView"/>
+    </sharedElements>
+    <sharedElements xsi:type="basic:Part" xmi:id="_8abDkJ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.navigator.ProjectExplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="%Common_Resource_Navigator" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/eview16/resource_persp.gif" tooltip="Common_Resource_Navigator" closeable="true">
+      <tags>View</tags>
+      <tags>categoryTag:org.eclipse.ui</tags>
+      <menus xmi:id="_8abDkZ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.navigator.ProjectExplorer">
+        <tags>ViewMenu</tags>
+      </menus>
+      <toolbar xmi:id="_8abDkp7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.navigator.ProjectExplorer"/>
+    </sharedElements>
     <trimBars xmi:id="_qUHE4pvBEeOju7PEXqMTcg">
       <children xsi:type="menu:ToolBar" xmi:id="_qUHE45vBEeOju7PEXqMTcg" elementId="toolbar:org.eclipse.ui.main.toolbar">
         <children xsi:type="menu:HandledToolItem" xmi:id="_qUHE5JvBEeOju7PEXqMTcg" iconURI="platform:/plugin/net.sf.milkfish.product/icons/sample.png" command="_qUGd1JvBEeOju7PEXqMTcg"/>
@@ -43,6 +95,30 @@
     <children xmi:id="_qUF2ypvBEeOju7PEXqMTcg" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_qUF2y5vBEeOju7PEXqMTcg" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
+  <descriptors xmi:id="_IT4FMJ7sEeOsYpGGoUrbcw" elementId="org.eclipse.ui.console.ConsoleView" label="%ConsoleView.name" iconURI="platform:/plugin/org.eclipse.ui.console/icons/full/cview16/console_view.gif" tooltip="ConsoleView" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+    <menus xmi:id="_IT4FMZ7sEeOsYpGGoUrbcw" elementId="org.eclipse.ui.console.ConsoleView">
+      <tags>ViewMenu</tags>
+    </menus>
+    <toolbar xmi:id="_IT4FMp7sEeOsYpGGoUrbcw" elementId="org.eclipse.ui.console.ConsoleView"/>
+  </descriptors>
+  <descriptors xmi:id="_1BuNIJ7tEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.PropertySheet" label="%Views.PropertySheet" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/prop_ps.gif" tooltip="PropertySheet" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+    <menus xmi:id="_1BuNIZ7tEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.PropertySheet">
+      <tags>ViewMenu</tags>
+    </menus>
+    <toolbar xmi:id="_1BuNIp7tEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.PropertySheet"/>
+  </descriptors>
+  <descriptors xmi:id="_Cd9IwJ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.ProgressView" label="%Views.Progress" iconURI="platform:/plugin/org.eclipse.ui.ide/icons/full/eview16/pview.gif" tooltip="Progress" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+    <menus xmi:id="_Cd9IwZ7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.ProgressView">
+      <tags>ViewMenu</tags>
+    </menus>
+    <toolbar xmi:id="_Cd9Iwp7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.ProgressView"/>
+  </descriptors>
+  <descriptors xmi:id="_4luC4J7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.navigator.ProjectExplorer" label="%Common_Resource_Navigator" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/eview16/resource_persp.gif" tooltip="Common_Resource_Navigator" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+    <menus xmi:id="_4luC4Z7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.navigator.ProjectExplorer">
+      <tags>ViewMenu</tags>
+    </menus>
+    <toolbar xmi:id="_4luC4p7uEeOsYpGGoUrbcw" elementId="org.eclipse.ui.navigator.ProjectExplorer"/>
+  </descriptors>
   <commands xmi:id="_qUGd0JvBEeOju7PEXqMTcg" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_qUGd1JvBEeOju7PEXqMTcg" elementId="net.sf.milkfish.product.open" commandName="openCommand"/>
   <commands xmi:id="_qUGd15vBEeOju7PEXqMTcg" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
