@@ -31,7 +31,11 @@
       <children xsi:type="menu:Menu" xmi:id="_qUGd3pvBEeOju7PEXqMTcg" label="File">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_qUGd35vBEeOju7PEXqMTcg" label="Open" iconURI="platform:/plugin/net.sf.milkfish.product/icons/sample.png" command="_qUGd1JvBEeOju7PEXqMTcg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_qUGd4JvBEeOju7PEXqMTcg" label="Save" iconURI="platform:/plugin/net.sf.milkfish.product/icons/save_edit.png" command="_qUGd15vBEeOju7PEXqMTcg"/>
+        <children xsi:type="menu:MenuSeparator" xmi:id="_5wUUMKCjEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.menuseparator.0"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_8qBsQKCjEeOwbL2g5RR4Tg" elementId="" label="Open Trace File" iconURI="platform:/plugin/net.sf.milkfish.product/icons/sample.png" tooltip="Open Trace File" command="_tZ60sKCiEeOwbL2g5RR4Tg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_aktXUKCkEeOwbL2g5RR4Tg" elementId="" label="Open Trace Dir" iconURI="platform:/plugin/net.sf.milkfish.product/icons/sample.png" tooltip="Open Trace Dir" command="_AYeJYKCjEeOwbL2g5RR4Tg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_qUGd4ZvBEeOju7PEXqMTcg" label="Quit" command="_qUGd0JvBEeOju7PEXqMTcg"/>
+        <children xsi:type="menu:MenuSeparator" xmi:id="_f5nmgKCkEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.menuseparator.1"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_qUGd4pvBEeOju7PEXqMTcg" label="Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_qUGd45vBEeOju7PEXqMTcg" label="About" command="_qUGd2pvBEeOju7PEXqMTcg"/>
@@ -85,6 +89,8 @@
   <handlers xmi:id="_qUGd2JvBEeOju7PEXqMTcg" elementId="net.sf.milkfish.product.handler.saveCommand" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.SaveHandler" command="_qUGd15vBEeOju7PEXqMTcg"/>
   <handlers xmi:id="_qUGd25vBEeOju7PEXqMTcg" elementId="net.sf.milkfish.product.handler.aboutCommand" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.AboutHandler" command="_qUGd2pvBEeOju7PEXqMTcg"/>
   <handlers xmi:id="_90zV4JyIEeO2-aLtzkRuAg" elementId="net.sf.milkfish.product.handler.recordCommand" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.RecordHandler" command="_2RhKoJyIEeO2-aLtzkRuAg"/>
+  <handlers xmi:id="_YSkLAKCjEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.handler.openTraceFileCommand" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.OpenFileHandler" command="_tZ60sKCiEeOwbL2g5RR4Tg"/>
+  <handlers xmi:id="_q9yUAKCjEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.handler.openTraceDirCommand" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.OpenDirHandler" command="_AYeJYKCjEeOwbL2g5RR4Tg"/>
   <bindingTables xmi:id="_qUGd0pvBEeOju7PEXqMTcg" bindingContext="_qUF2yZvBEeOju7PEXqMTcg">
     <bindings xmi:id="_qUGd05vBEeOju7PEXqMTcg" keySequence="M1+Q" command="_qUGd0JvBEeOju7PEXqMTcg"/>
     <bindings xmi:id="_qUGd1pvBEeOju7PEXqMTcg" keySequence="M1+O" command="_qUGd1JvBEeOju7PEXqMTcg"/>
@@ -124,6 +130,8 @@
   <commands xmi:id="_qUGd15vBEeOju7PEXqMTcg" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_qUGd2pvBEeOju7PEXqMTcg" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
   <commands xmi:id="_2RhKoJyIEeO2-aLtzkRuAg" elementId="net.sf.milkfish.product.command.record" commandName="recordCommand"/>
+  <commands xmi:id="_tZ60sKCiEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.command.openTraceFile" commandName="openTraceFileCommand" description="Open Trace File"/>
+  <commands xmi:id="_AYeJYKCjEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.command.openTraceDir" commandName="openTraceDirCommand" description="Open Trace Dir"/>
   <addons xmi:id="_qUF2wpvBEeOju7PEXqMTcg" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_qUF2w5vBEeOju7PEXqMTcg" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_qUF2xJvBEeOju7PEXqMTcg" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
