@@ -122,6 +122,8 @@
       <feature id="org.eclipse.emf.ecore"/>
       <feature id="org.eclipse.e4.rcp"/>
       <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.linuxtools.ctf"/>
+      <feature id="org.eclipse.linuxtools.tmf"/>
    </features>
 
    <configurations>
