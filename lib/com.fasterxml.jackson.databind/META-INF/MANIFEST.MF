@@ -25,3 +25,5 @@ Export-Package: com.fasterxml.jackson.databind,
  com.fasterxml.jackson.databind.type,
  com.fasterxml.jackson.databind.util
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: com.fasterxml.jackson.core;bundle-version="2.3.2",
+ com.fasterxml.jackson.annotations;bundle-version="2.3.2"

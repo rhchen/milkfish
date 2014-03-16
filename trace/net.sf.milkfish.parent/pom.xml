@@ -61,11 +61,10 @@
   	<module>../net.sf.milkfish.product.tests</module>
   	<module>../net.sf.milkfish.repository</module>
   	<module>../../lib/com.fasterxml.jackson.core</module>
-  	<module>../net.sf.milkfish.systrace.core</module>
-  	<module>../../lib/com.fasterxml.jackson.core.test</module>
-  	<module>../net.sf.milkfish.systrace.core.test</module>
   	<module>../../lib/com.fasterxml.jackson.databind</module>
   	<module>../../lib/com.fasterxml.jackson.annotations</module>
   	<module>../../lib/com.fasterxml.jackson.test</module>
+  	<module>../net.sf.milkfish.systrace.core</module>
+  	<module>../net.sf.milkfish.systrace.core.test</module>
   </modules>
 </project>

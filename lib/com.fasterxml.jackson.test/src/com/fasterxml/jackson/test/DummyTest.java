@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.io.PrintWriter;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DummyTest {
 
@@ -37,7 +38,6 @@ public class DummyTest {
 	@Test
 	public final void test() {
 		
-		URL url;
 		try {
 		    
 			File f = new File("data/chromeos_system_trace.json");
@@ -46,7 +46,19 @@ public class DummyTest {
 			
 			JsonParser parser = factory.createParser(f);
 			
-			Assert.assertNotNull(factory);
+			ObjectMapper mapper = new ObjectMapper();
+			Object json = mapper.readValue(parser, Object.class);
+			
+			String str = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+			
+			System.out.println(str);
+	
+			/* Print to file */
+			PrintWriter out = new PrintWriter("data/chromeos_system_trace_formated.json");
+			out.println(str);
+			out.close();
+			
+			Assert.assertNotNull(str);
 			
 		} catch (IOException e) {
 		    e.printStackTrace();
