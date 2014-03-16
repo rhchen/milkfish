@@ -56,7 +56,7 @@ public class AboutHandlerTest {
 	@Test
 	public final void testExecute() {
 		
-		for(int i=0; i<5; i++){
+		for(int i=0; i<1; i++){
 			
 			bot.sleep(2000);
 			bot.menu("Help").menu("About").click();

@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Systrace Core
+Bundle-SymbolicName: net.sf.milkfish.systrace.core
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: net.sf.milkfish
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: com.fasterxml.jackson.core;bundle-version="2.3.2"
