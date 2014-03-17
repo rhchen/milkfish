@@ -9,4 +9,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.junit,
  net.sf.milkfish.product;bundle-version="1.0.0",
  com.fasterxml.jackson.annotations;bundle-version="2.3.2",
- com.fasterxml.jackson.databind;bundle-version="2.3.2"
+ com.fasterxml.jackson.databind;bundle-version="2.3.2",
+ com.fasterxml.jackson.dataformat.xml;bundle-version="2.3.2"

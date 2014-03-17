@@ -66,5 +66,6 @@
   	<module>../../lib/com.fasterxml.jackson.test</module>
   	<module>../net.sf.milkfish.systrace.core</module>
   	<module>../net.sf.milkfish.systrace.core.test</module>
+  	<module>../../lib/com.fasterxml.jackson.dataformat.xml</module>
   </modules>
 </project>
