@@ -71,8 +71,9 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 			return new Status(IStatus.ERROR, PLUGIN_ID, path + " is not a file"); //$NON-NLS-1$
 		}
 
-		return new Status(IStatus.ERROR, PLUGIN_ID,
-				"File does not start as a CSV"); //$NON-NLS-1$
+		
+		
+		return Status.OK_STATUS;
 	}
 
 	@Override
@@ -94,6 +95,9 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 			throw new TmfTraceException("file is empty"); //$NON-NLS-1$
 
 		fEventTypes = new String[] { "sched_switch", "irq" }; // 64 values of types according to //$NON-NLS-1$
+		
+		setNbEvents(1000000);
+		
 		// the 'spec'
 		if (getNbEvents() < 1) {
 			throw new TmfTraceException("Trace does not have any events"); //$NON-NLS-1$
