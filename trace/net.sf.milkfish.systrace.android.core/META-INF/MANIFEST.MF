@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Systrace Android Core
+Bundle-SymbolicName: net.sf.milkfish.systrace.android.core
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: net.sf.milkfish
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
+ org.eclipse.core.resources;bundle-version="3.8.101",
+ org.eclipse.linuxtools.tmf.core;bundle-version="2.2.0"
+Export-Package: net.sf.milkfish.systrace.android.core

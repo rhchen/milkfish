@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.linuxtools.tmf.ui.tracetype">
+      <type
+            event_type="org.eclipse.linuxtools.tmf.core.event.TmfEvent"
+            icon="icons/sample_decorator.gif"
+            id="net.sf.milkfish.systrace.android.ui.type"
+            name="AndroidTrace"
+            trace_type="net.sf.milkfish.systrace.android.core.AndroidTrace">
+      </type>
+   </extension>
+
+</plugin>

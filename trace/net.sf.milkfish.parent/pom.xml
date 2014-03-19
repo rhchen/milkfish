@@ -67,5 +67,7 @@
   	<module>../net.sf.milkfish.systrace.core</module>
   	<module>../net.sf.milkfish.systrace.core.test</module>
   	<module>../../lib/com.fasterxml.jackson.dataformat.xml</module>
+  	<module>../net.sf.milkfish.systrace.android.core</module>
+  	<module>../net.sf.milkfish.systrace.android.ui</module>
   </modules>
 </project>
