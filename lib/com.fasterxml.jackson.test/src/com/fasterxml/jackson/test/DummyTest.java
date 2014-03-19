@@ -3,15 +3,36 @@ package com.fasterxml.jackson.test;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Scanner;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.sax.SAXTransformerFactory;
+import javax.xml.transform.sax.TransformerHandler;
+import javax.xml.transform.stream.StreamResult;
+
+import org.xml.sax.ContentHandler;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -45,7 +66,7 @@ public class DummyTest {
 	}
 
 	@Test
-	public final void test() {
+	public final void test_0() {
 		
 		try {
 		    
@@ -75,7 +96,7 @@ public class DummyTest {
 	}
 	
 	@Test
-	public final void test1() {
+	public final void test_1() {
 		
 		
 		try {
@@ -115,5 +136,29 @@ public class DummyTest {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@Test
+	public final void test_2() {
+		
+		try {
+			
+			Document doc = Jsoup.parse(new File("data/android_systrace.html"), "UTF-8");
+	        
+	        Elements links = doc.select("script");
+			for (Element link : links) {
+	 
+				// get the value from href attribute
+				//System.out.println("text : " + link.data());
+	 
+			}
+	        
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+	}
+	
 }
