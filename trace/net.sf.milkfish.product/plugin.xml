@@ -23,6 +23,10 @@
                name="clearPersistedState"
                value="true">
          </property>
+         <property
+               name="lifeCycleURI"
+               value="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.LifeCycleHandler">
+         </property>
       </product>
    </extension>
    <extension
@@ -37,4 +41,5 @@
          </run>
       </application>
    </extension>
+   
 </plugin>

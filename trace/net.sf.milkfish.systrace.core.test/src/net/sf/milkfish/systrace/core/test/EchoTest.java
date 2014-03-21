@@ -31,7 +31,7 @@ public class EchoTest {
 	@Test
 	public final void testEcho() {
 		
-		int r = SystraceService.echo();
+		int r = new SystraceService().echo();
 		
 		Assert.assertNotNull(r);
 	}

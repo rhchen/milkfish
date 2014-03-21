@@ -12,7 +12,10 @@
 
 package net.sf.milkfish.product.handlers;
 
+import javax.inject.Inject;
+
 import net.sf.milkfish.product.messages.Messages;
+import net.sf.milkfish.systrace.core.ISystraceService;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -23,11 +26,12 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * Open file handler, used to open files (not directories)
- *
- * @author Matthew Khouzam
+ * 
  */
 public class OpenFileHandler  {
 
+	@Inject private ISystraceService systraceService;
+	
 	@Execute
 	public void execute(Shell shell){
         FileDialog fd = new FileDialog(shell);
@@ -42,6 +46,12 @@ public class OpenFileHandler  {
         } catch (CoreException e) {
             e.printStackTrace();
         }
+        
+        int echo = systraceService.echo();
+		
+		System.out.println("AndroidTrace.validate "+ echo);
+		
+		
         return ;
     }
 }

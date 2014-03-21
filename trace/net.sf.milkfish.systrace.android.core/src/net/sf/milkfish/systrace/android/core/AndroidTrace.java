@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+
+import net.sf.milkfish.systrace.core.ISystraceService;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IStatus;
@@ -71,8 +75,6 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 			return new Status(IStatus.ERROR, PLUGIN_ID, path + " is not a file"); //$NON-NLS-1$
 		}
 
-		
-		
 		return Status.OK_STATUS;
 	}
 
