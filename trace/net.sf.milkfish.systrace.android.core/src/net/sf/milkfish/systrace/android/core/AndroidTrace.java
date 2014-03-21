@@ -15,6 +15,8 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
+import net.sf.milkfish.systrace.android.core.state.SystraceStateProvider;
+import net.sf.milkfish.systrace.android.core.state.SystraceStrings;
 import net.sf.milkfish.systrace.core.ISystraceService;
 
 import org.eclipse.core.resources.IProject;
@@ -23,7 +25,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.event.TmfEvent;
 import org.eclipse.linuxtools.tmf.core.event.TmfEventField;
 import org.eclipse.linuxtools.tmf.core.event.TmfEventType;
 import org.eclipse.linuxtools.tmf.core.exceptions.TmfTraceException;
@@ -32,6 +33,9 @@ import org.eclipse.linuxtools.tmf.core.request.TmfEventRequest;
 import org.eclipse.linuxtools.tmf.core.signal.TmfSignalHandler;
 import org.eclipse.linuxtools.tmf.core.signal.TmfSignalManager;
 import org.eclipse.linuxtools.tmf.core.signal.TmfTraceSelectedSignal;
+import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateProvider;
+import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateSystem;
+import org.eclipse.linuxtools.tmf.core.statesystem.TmfStateSystemFactory;
 import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
 import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimeRange;
 import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimestamp;
@@ -46,6 +50,12 @@ import org.eclipse.linuxtools.tmf.core.trace.TmfTraceManager;
 
 public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
+	/* The file name of the History Tree */
+    public final static String HISTORY_TREE_FILE_NAME = "stateHistory.ht"; //$NON-NLS-1$
+
+    /* ID of the state system we will build */
+    public static final String STATE_ID = "net.sf.milkfish.systrace.android"; //$NON-NLS-1$
+    
 	public static final String PLUGIN_ID = "net.sf.milkfish.systrace.android.core";
 
 	private static final int CHUNK_SIZE = 65536; // seems fast on MY system
@@ -162,29 +172,55 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		}
 
 		long pos = context.getRank();
+		
+		/* escapse on count == NBevents */
+		if(pos == getNbEvents()) return null;
+		
 		final String title = fEventTypes[0];
-		long ts = System.currentTimeMillis();
+		long ts = System.currentTimeMillis()*1000;
 
-		TmfTimestamp timestamp = new TmfTimestamp(ts,
-				ITmfTimestamp.MICROSECOND_SCALE);
+		TmfTimestamp timestamp = new TmfTimestamp(ts,ITmfTimestamp.MICROSECOND_SCALE);
 
 		Random rnd = new Random();
 
-		int payload = rnd.nextInt(100);
+		long payload = Long.valueOf(rnd.nextInt(10));
 
 		// put the value in a field
-		final TmfEventField tmfEventField = new TmfEventField(
-				"value", payload, null); //$NON-NLS-1$
+		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		final TmfEventField tmfEventField_PREV_TID = new TmfEventField(SystraceStrings.PREV_TID, payload, null); //$NON-NLS-1$
+		final TmfEventField tmfEventField_PREV_STATE = new TmfEventField(SystraceStrings.PREV_STATE, 0L, null); //$NON-NLS-1$
+		final TmfEventField tmfEventField_NEXT_COMM = new TmfEventField(SystraceStrings.NEXT_COMM, payload+1+"", null); //$NON-NLS-1$
+		final TmfEventField tmfEventField_NEXT_TID = new TmfEventField(SystraceStrings.NEXT_TID, payload+1, null); //$NON-NLS-1$
+		
+		
 		// the field must be in an array
-		final TmfEventField[] fields = new TmfEventField[1];
+		final TmfEventField[] fields = new TmfEventField[5];
 		fields[0] = tmfEventField;
-		final TmfEventField content = new TmfEventField(
-				ITmfEventField.ROOT_FIELD_ID, null, fields);
+		fields[1] = tmfEventField_PREV_TID;
+		fields[2] = tmfEventField_PREV_STATE;
+		fields[3] = tmfEventField_NEXT_COMM;
+		fields[4] = tmfEventField_NEXT_TID;
+		
+		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 
-		TmfEvent event = new TmfEvent(this, pos, timestamp, null,
-				new TmfEventType(title, title, null), content, null);
+		fCurrentLocation = new TmfLongLocation(pos);
+		
+		SystraceEvent event = new SystraceEvent(this, pos, timestamp, null,new TmfEventType(title, title, null), content, null, rnd.nextInt(10), title);
 
 		return event;
 	}
 
+	/* State system is for flowcontrol view */
+	@Override
+    protected void buildStateSystem() throws TmfTraceException {
+        super.buildStateSystem();
+
+        /* Build the state system specific to LTTng kernel traces */
+        String directory = TmfTraceManager.getSupplementaryFileDir(this);
+        final File htFile = new File(directory + HISTORY_TREE_FILE_NAME);
+        final ITmfStateProvider htInput = new SystraceStateProvider(this);
+
+        ITmfStateSystem ss = TmfStateSystemFactory.newFullHistory(htFile, htInput, false);
+        fStateSystems.put(STATE_ID, ss);
+    }
 }
