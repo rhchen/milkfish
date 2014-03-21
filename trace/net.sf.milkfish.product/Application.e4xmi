@@ -41,6 +41,9 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_qUGd45vBEeOju7PEXqMTcg" label="About" command="_qUGd2pvBEeOju7PEXqMTcg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_ISCw0JyJEeO2-aLtzkRuAg" elementId="" label="Record" command="_2RhKoJyIEeO2-aLtzkRuAg"/>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="_a37asLC9EeO0d83nW4AFIA" elementId="net.sf.milkfish.product.menu.0" label="Window">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_eZW6ELC9EeO0d83nW4AFIA" elementId="" label="Show View" tooltip="Show View" command="_xrfukLC8EeO0d83nW4AFIA"/>
+      </children>
     </mainMenu>
     <sharedElements xsi:type="advanced:Area" xmi:id="_Ap_bUJ7vEeOsYpGGoUrbcw" elementId="org.eclipse.ui.editorss">
       <children xsi:type="basic:PartStack" xmi:id="_IT9dYJ7vEeOsYpGGoUrbcw" elementId="org.eclipse.e4.primaryDataStack"/>
@@ -91,6 +94,7 @@
   <handlers xmi:id="_90zV4JyIEeO2-aLtzkRuAg" elementId="net.sf.milkfish.product.handler.recordCommand" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.RecordHandler" command="_2RhKoJyIEeO2-aLtzkRuAg"/>
   <handlers xmi:id="_YSkLAKCjEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.handler.openTraceFileCommand" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.OpenFileHandler" command="_tZ60sKCiEeOwbL2g5RR4Tg"/>
   <handlers xmi:id="_q9yUAKCjEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.handler.openTraceDirCommand" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.handlers.OpenDirHandler" command="_AYeJYKCjEeOwbL2g5RR4Tg"/>
+  <handlers xmi:id="_J9kyYLC9EeO0d83nW4AFIA" elementId="org.eclipse.ui.showViewHandler" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.internal.workbench.swt.handlers.ShowViewHandler" command="_xrfukLC8EeO0d83nW4AFIA"/>
   <bindingTables xmi:id="_qUGd0pvBEeOju7PEXqMTcg" bindingContext="_qUF2yZvBEeOju7PEXqMTcg">
     <bindings xmi:id="_qUGd05vBEeOju7PEXqMTcg" keySequence="M1+Q" command="_qUGd0JvBEeOju7PEXqMTcg"/>
     <bindings xmi:id="_qUGd1pvBEeOju7PEXqMTcg" keySequence="M1+O" command="_qUGd1JvBEeOju7PEXqMTcg"/>
@@ -132,6 +136,9 @@
   <commands xmi:id="_2RhKoJyIEeO2-aLtzkRuAg" elementId="net.sf.milkfish.product.command.record" commandName="recordCommand"/>
   <commands xmi:id="_tZ60sKCiEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.command.openTraceFile" commandName="openTraceFileCommand" description="Open Trace File"/>
   <commands xmi:id="_AYeJYKCjEeOwbL2g5RR4Tg" elementId="net.sf.milkfish.product.command.openTraceDir" commandName="openTraceDirCommand" description="Open Trace Dir"/>
+  <commands xmi:id="_xrfukLC8EeO0d83nW4AFIA" elementId="org.eclipse.ui.views.showView" commandName="showViewsCommand" description="Show View">
+    <parameters xmi:id="_90L-sLC8EeO0d83nW4AFIA" elementId="org.eclipse.ui.views.showView.viewId" name="View"/>
+  </commands>
   <addons xmi:id="_qUF2wpvBEeOju7PEXqMTcg" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_qUF2w5vBEeOju7PEXqMTcg" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_qUF2xJvBEeOju7PEXqMTcg" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

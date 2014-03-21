@@ -98,7 +98,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 		fEventTypes = new String[] { "sched_switch", "irq" }; // 64 values of types according to //$NON-NLS-1$
 		
-		setNbEvents(1000000);
+		setNbEvents(10000);
 		
 		// the 'spec'
 		if (getNbEvents() < 1) {
