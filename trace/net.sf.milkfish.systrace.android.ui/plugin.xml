@@ -14,7 +14,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="net.sf.milkfish.systrace.android.ui.views.controlflow.ControlFlowView"
+            class="net.sf.milkfish.systrace.android.ui.ControlFlowViewWrapper"
             icon="icons/sample_decorator.gif"
             id="net.sf.milkfish.systrace.android.ui.views.controlflow.ControlFlowView"
             name="controlflow"

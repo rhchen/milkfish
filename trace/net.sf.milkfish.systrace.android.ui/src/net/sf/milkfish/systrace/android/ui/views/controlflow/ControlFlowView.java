@@ -18,18 +18,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
 import net.sf.milkfish.systrace.android.core.AndroidTrace;
 import net.sf.milkfish.systrace.android.core.state.SystraceAttributes;
 import net.sf.milkfish.systrace.android.ui.Activator;
 import net.sf.milkfish.systrace.android.ui.Messages;
-import net.sf.milkfish.systrace.core.ISystraceService;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
-import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -52,9 +46,6 @@ import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.TimeLinkEvent;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.widgets.Utils;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.widgets.Utils.Resolution;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.widgets.Utils.TimeFormat;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.PartInitException;
 
 /**
  * The Control Flow view main object
@@ -90,24 +81,6 @@ public class ControlFlowView extends AbstractTimeGraphView {
             TID_COLUMN
     };
 
-    // ------------------------------------------------------------------------
-    // Injections
-    // ------------------------------------------------------------------------
-    
-    @Inject private ISystraceService systraceService;
-    
-    @Override
-    public void init(IViewSite site) throws PartInitException {
-       super.init(site);
-  
-       IEclipseContext context = (IEclipseContext) site.getService(IEclipseContext.class);
-       ContextInjectionFactory.inject(this, context);
-       
-       int echo = systraceService.echo();
-       
-       System.out.println("ControlFlowView.init "+ echo);
-    }
-    
     // ------------------------------------------------------------------------
     // Constructors
     // ------------------------------------------------------------------------
