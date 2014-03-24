@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_aEv6YLNnEeOynPQoS6D6Ow">
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_a8JccLNnEeOynPQoS6D6Ow" featurename="addons" parentElementId="org.eclipse.e4.ide.application">
-    <elements xsi:type="application:Addon" xmi:id="_hfcKULNnEeOynPQoS6D6Ow" elementId="net.sf.milkfish.systrace.core.addon" contributionURI="bundleclass://net.sf.milkfish.systrace.core/net.sf.milkfish.systrace.core.SystraceAddon"/>
-  </fragments>
-</fragment:ModelFragments>

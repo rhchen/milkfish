@@ -1,4 +1,4 @@
-package net.sf.milkfish.systrace.android.ui;
+package net.sf.milkfish.systrace.android.ui.views;
 
 import javax.inject.Inject;
 
