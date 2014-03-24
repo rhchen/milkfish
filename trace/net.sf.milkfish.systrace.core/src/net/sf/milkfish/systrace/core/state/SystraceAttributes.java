@@ -10,7 +10,7 @@
  *   Alexandre Montplaisir - Initial API and implementation
  ******************************************************************************/
 
-package net.sf.milkfish.systrace.android.core.state;
+package net.sf.milkfish.systrace.core.state;
 
 /**
  * This file defines all the attribute names used in the handler. Both the

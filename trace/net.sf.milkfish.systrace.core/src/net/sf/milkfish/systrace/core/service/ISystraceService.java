@@ -1,4 +1,4 @@
-package net.sf.milkfish.systrace.core;
+package net.sf.milkfish.systrace.core.service;
 
 import javax.inject.Singleton;
 

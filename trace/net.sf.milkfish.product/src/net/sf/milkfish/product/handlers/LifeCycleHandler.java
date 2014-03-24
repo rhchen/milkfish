@@ -1,7 +1,7 @@
 package net.sf.milkfish.product.handlers;
 
-import net.sf.milkfish.systrace.core.ISystraceService;
-import net.sf.milkfish.systrace.core.impl.SystraceService;
+import net.sf.milkfish.systrace.core.service.ISystraceService;
+import net.sf.milkfish.systrace.core.service.impl.SystraceService;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.InjectorFactory;

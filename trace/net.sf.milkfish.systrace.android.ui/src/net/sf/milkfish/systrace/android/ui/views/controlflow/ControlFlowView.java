@@ -19,9 +19,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sf.milkfish.systrace.android.core.AndroidTrace;
-import net.sf.milkfish.systrace.android.core.state.SystraceAttributes;
 import net.sf.milkfish.systrace.android.ui.Activator;
 import net.sf.milkfish.systrace.android.ui.Messages;
+import net.sf.milkfish.systrace.core.state.SystraceAttributes;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IAction;

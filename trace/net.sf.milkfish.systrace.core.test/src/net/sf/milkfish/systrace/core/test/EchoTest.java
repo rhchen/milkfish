@@ -1,7 +1,7 @@
 package net.sf.milkfish.systrace.core.test;
 
 import static org.junit.Assert.*;
-import net.sf.milkfish.systrace.core.impl.SystraceService;
+import net.sf.milkfish.systrace.core.service.impl.SystraceService;
 
 import org.junit.After;
 import org.junit.AfterClass;

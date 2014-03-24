@@ -10,12 +10,11 @@
  *
  *******************************************************************************/
 
-package net.sf.milkfish.systrace.android.core.state;
+package net.sf.milkfish.systrace.core.state;
 
 import java.util.HashMap;
 
-import net.sf.milkfish.systrace.android.core.AndroidTrace;
-import net.sf.milkfish.systrace.android.core.SystraceEvent;
+import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
 
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
@@ -80,7 +79,7 @@ public class SystraceStateProvider extends AbstractTmfStateProvider {
 
     @Override
     public SystraceStateProvider getNewInstance() {
-        return new SystraceStateProvider((AndroidTrace) this.getTrace());
+        return new SystraceStateProvider((ITmfTrace) this.getTrace());
     }
 
     @Override

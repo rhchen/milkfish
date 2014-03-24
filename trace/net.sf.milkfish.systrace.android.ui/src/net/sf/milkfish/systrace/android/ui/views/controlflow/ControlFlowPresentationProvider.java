@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.milkfish.systrace.android.core.AndroidTrace;
-import net.sf.milkfish.systrace.android.core.state.SystraceAttributes;
-import net.sf.milkfish.systrace.android.core.state.SystraceStateValues;
 import net.sf.milkfish.systrace.android.ui.Messages;
+import net.sf.milkfish.systrace.core.state.SystraceAttributes;
+import net.sf.milkfish.systrace.core.state.SystraceStateValues;
 
 import org.eclipse.linuxtools.tmf.core.exceptions.AttributeNotFoundException;
 import org.eclipse.linuxtools.tmf.core.exceptions.StateSystemDisposedException;

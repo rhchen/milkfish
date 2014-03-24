@@ -10,7 +10,7 @@
  *   Alexandre Montplaisir - Initial API and implementation
  ******************************************************************************/
 
-package net.sf.milkfish.systrace.android.core.state;
+package net.sf.milkfish.systrace.core.state;
 
 import org.eclipse.linuxtools.tmf.core.statevalue.ITmfStateValue;
 import org.eclipse.linuxtools.tmf.core.statevalue.TmfStateValue;

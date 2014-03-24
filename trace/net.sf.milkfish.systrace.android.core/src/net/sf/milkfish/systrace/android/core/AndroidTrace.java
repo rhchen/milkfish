@@ -15,9 +15,10 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-import net.sf.milkfish.systrace.android.core.state.SystraceStateProvider;
-import net.sf.milkfish.systrace.android.core.state.SystraceStrings;
-import net.sf.milkfish.systrace.core.ISystraceService;
+import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
+import net.sf.milkfish.systrace.core.service.ISystraceService;
+import net.sf.milkfish.systrace.core.state.SystraceStateProvider;
+import net.sf.milkfish.systrace.core.state.SystraceStrings;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;

@@ -8,7 +8,7 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 
 import net.sf.milkfish.systrace.android.ui.views.controlflow.ControlFlowView;
-import net.sf.milkfish.systrace.core.ISystraceService;
+import net.sf.milkfish.systrace.core.service.ISystraceService;
 
 public class ControlFlowViewWrapper extends ControlFlowView {
 

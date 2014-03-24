@@ -15,7 +15,7 @@ package net.sf.milkfish.product.handlers;
 import javax.inject.Inject;
 
 import net.sf.milkfish.product.messages.Messages;
-import net.sf.milkfish.systrace.core.ISystraceService;
+import net.sf.milkfish.systrace.core.service.ISystraceService;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.core.di.annotations.Execute;

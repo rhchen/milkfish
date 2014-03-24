@@ -1,10 +1,10 @@
-package net.sf.milkfish.systrace.core.impl;
+package net.sf.milkfish.systrace.core.service.impl;
 
 import javax.inject.Singleton;
 
-import org.eclipse.e4.core.di.annotations.Creatable;
+import net.sf.milkfish.systrace.core.service.ISystraceService;
 
-import net.sf.milkfish.systrace.core.ISystraceService;
+import org.eclipse.e4.core.di.annotations.Creatable;
 
 import com.fasterxml.jackson.core.JsonFactory;
 
