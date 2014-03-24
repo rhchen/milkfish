@@ -35,6 +35,11 @@ public class Activator extends AbstractUIPlugin {
     public static final String PLUGIN_ID = "net.sf.milkfish.systrace.android.ui"; //$NON-NLS-1$
 
     /**
+     *  The trace type ID
+     */
+    public static final String TRACETYPE_ID = "net.sf.milkfish.systrace.android.core.AndroidTrace"; //$NON-NLS-1$
+    
+    /**
      *  The shared instance
      */
     private static Activator plugin;

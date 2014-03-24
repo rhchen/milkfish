@@ -49,7 +49,7 @@ public class OpenFileHandler  {
         
         int echo = systraceService.echo();
 		
-		System.out.println("AndroidTrace.validate "+ echo);
+		System.out.println("OpenFileHandler.execute "+ echo);
 		
 		
         return ;

@@ -75,6 +75,9 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 	private FileChannel fFileChannel;
 	private MappedByteBuffer fMappedByteBuffer;
 
+	/* Reference to class ModelAddon, there inject the require instance */
+	@Inject private ISystraceService systraceService;
+	
 	@Override
 	public IStatus validate(IProject project, String path) {
 
@@ -86,6 +89,10 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 			return new Status(IStatus.ERROR, PLUGIN_ID, path + " is not a file"); //$NON-NLS-1$
 		}
 
+		int echo = systraceService.echo();
+		
+		System.out.println("AndroidTrace.validate "+ echo);
+		
 		return Status.OK_STATUS;
 	}
 

@@ -6,7 +6,7 @@
       <type
             event_type="org.eclipse.linuxtools.tmf.core.event.TmfEvent"
             icon="icons/sample_decorator.gif"
-            id="net.sf.milkfish.systrace.android.ui.type"
+            id="net.sf.milkfish.systrace.android.core.AndroidTrace"
             name="AndroidTrace"
             trace_type="net.sf.milkfish.systrace.android.core.AndroidTrace">
       </type>
