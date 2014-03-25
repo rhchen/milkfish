@@ -12,6 +12,9 @@ import net.sf.milkfish.systrace.core.service.ISystraceService;
 
 public class ControlFlowViewWrapper extends ControlFlowView {
 
+	
+	private IEclipseContext _context;
+	
 	// ------------------------------------------------------------------------
     // Injections
     // ------------------------------------------------------------------------
@@ -20,15 +23,29 @@ public class ControlFlowViewWrapper extends ControlFlowView {
     
     @Override
     public void init(IViewSite site) throws PartInitException {
-       super.init(site);
+       
   
-       IEclipseContext context = (IEclipseContext) site.getService(IEclipseContext.class);
-       ContextInjectionFactory.inject(this, context);
+       _context = (IEclipseContext) site.getService(IEclipseContext.class);
+       
+       assert _context != null;
+       
+       super.init(site);
+       
+       ContextInjectionFactory.inject(this, _context);
        
        int echo = systraceService.echo();
        
        System.out.println("ControlFlowView.init "+ echo);
     }
+
+	@Override
+	public void dispose() {
+		
+		super.dispose();
+		
+		ContextInjectionFactory.uninject(this, _context);
+		
+	}
     
     
 }
