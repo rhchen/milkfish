@@ -24,6 +24,5 @@ public class SystraceService implements ISystraceService{
 	@Inject
 	public void annotate(@TraceEvent ITmfEvent event){
 		
-		System.out.println("SystraceService.annotate");
 	}
 }

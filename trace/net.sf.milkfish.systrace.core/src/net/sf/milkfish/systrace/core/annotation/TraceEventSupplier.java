@@ -42,8 +42,6 @@ public class TraceEventSupplier extends ExtendedObjectSupplier {
     	
     	String str = requestor.getRequestingObjectClass().getCanonicalName();
     	
-		System.out.println("TraceEventSupplier.get "+ track);
-		
 		TmfEventField fContent3 = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, "Some other different content", null);
 		ITmfEvent fEvent3 = new TmfEvent(null, fTimestamp3, fSource, fType3, fContent3, fReference);
         
