@@ -20,9 +20,13 @@ Export-Package: net.sf.milkfish.systrace.core,
  net.sf.milkfish.systrace.core.annotation,
  net.sf.milkfish.systrace.core.event,
  net.sf.milkfish.systrace.core.event.impl,
+ net.sf.milkfish.systrace.core.pipe,
+ net.sf.milkfish.systrace.core.pipe.impl,
  net.sf.milkfish.systrace.core.service,
  net.sf.milkfish.systrace.core.service.impl,
  net.sf.milkfish.systrace.core.state
 Bundle-Activator: net.sf.milkfish.systrace.core.Activator
-Service-Component: OSGI-INF/component.xml
+Service-Component: OSGI-INF/TraceEvent.xml,
+ OSGI-INF/TraceEventInput.xml,
+ OSGI-INF/TraceEventOutput.xml
 Bundle-ActivationPolicy: lazy

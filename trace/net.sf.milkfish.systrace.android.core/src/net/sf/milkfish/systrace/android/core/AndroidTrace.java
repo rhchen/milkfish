@@ -16,6 +16,7 @@ import java.util.Random;
 import javax.inject.Inject;
 
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
+import net.sf.milkfish.systrace.core.pipe.impl.TracePipe;
 import net.sf.milkfish.systrace.core.service.ISystraceService;
 import net.sf.milkfish.systrace.core.state.SystraceStateProvider;
 import net.sf.milkfish.systrace.core.state.SystraceStrings;
@@ -77,6 +78,8 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 	/* Reference to class ModelAddon, there inject the require instance */
 	@Inject private ISystraceService systraceService;
+	
+	@Inject private TracePipe pipe;
 	
 	@Override
 	public IStatus validate(IProject project, String path) {
@@ -213,8 +216,12 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 		fCurrentLocation = new TmfLongLocation(pos);
 		
-		SystraceEvent event = new SystraceEvent(this, pos, timestamp, null,new TmfEventType(title, title, null), content, null, rnd.nextInt(10), title);
-
+		SystraceEvent event = new SystraceEvent(this, pos, timestamp, null,new TmfEventType(title, title, null), content, timestamp.toString(), rnd.nextInt(10), title);
+		
+		systraceService.registPipe(pipe, event);
+		
+		pipe.echo();
+		
 		return event;
 	}
 

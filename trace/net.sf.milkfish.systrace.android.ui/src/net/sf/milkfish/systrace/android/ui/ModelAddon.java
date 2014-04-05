@@ -39,7 +39,7 @@ public class ModelAddon {
 		
 		ContextInjectionFactory.inject(tmfTrace, _context);
 		
-		System.out.println("ModelAddon : init");
+		System.out.println("net.sf.milkfish.systrace.android.ui.ModelAddon : init");
 	}
 	
 	@PreDestroy

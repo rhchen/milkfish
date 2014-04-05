@@ -1,5 +1,10 @@
 package net.sf.milkfish.systrace.core.annotation;
 
+import javax.inject.Inject;
+
+import net.sf.milkfish.systrace.core.service.ISystraceService;
+
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
@@ -27,7 +32,9 @@ public class TraceEventSupplier extends ExtendedObjectSupplier {
     private final TmfEventType fType3 = new TmfEventType(fContext, fTypeId2, TmfEventField.makeRoot(fLabels));
 
     private final String fReference = "Some reference";
-
+ 
+    @Inject private ISystraceService systraceService;
+    
     @Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor,
 			boolean track, boolean group) {
@@ -40,12 +47,14 @@ public class TraceEventSupplier extends ExtendedObjectSupplier {
          * IRequestor: the requesting location: the method, field, constructor; can re-trigger
          */
     	
-    	String str = requestor.getRequestingObjectClass().getCanonicalName();
+    	ITmfEvent event = systraceService.getCurrentEvent();
     	
-		TmfEventField fContent3 = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, "Some other different content", null);
-		ITmfEvent fEvent3 = new TmfEvent(null, fTimestamp3, fSource, fType3, fContent3, fReference);
+//    	String str = requestor.getRequestingObjectClass().getCanonicalName();
+//    	
+//		TmfEventField fContent3 = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, "Some other different content", null);
+//		ITmfEvent fEvent3 = new TmfEvent(null, fTimestamp3, fSource, fType3, fContent3, fReference);
         
-		return fEvent3;
+		return event;
 	}
 
 }
