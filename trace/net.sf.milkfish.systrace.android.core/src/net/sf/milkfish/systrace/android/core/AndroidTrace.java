@@ -15,7 +15,6 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-import net.sf.milkfish.systrace.android.core.util.PageTableHelper;
 import net.sf.milkfish.systrace.core.event.ISystraceEvent;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
 import net.sf.milkfish.systrace.core.pipe.impl.TracePipe;
@@ -135,21 +134,17 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		try {
 
 			fFileChannel = new FileInputStream(fFile).getChannel();
+			
 			seek(0);
 
+			systraceService.addTrace(fFile.toURI());
+			
 		} catch (FileNotFoundException e) {
 			throw new TmfTraceException(e.getMessage());
 		} catch (IOException e) {
 			throw new TmfTraceException(e.getMessage());
 		}
 		
-		try {
-			
-			PageTableHelper.getInstance().createPageTable(fFile.toURI());
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
