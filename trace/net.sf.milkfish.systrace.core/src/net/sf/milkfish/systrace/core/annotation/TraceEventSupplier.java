@@ -2,6 +2,7 @@ package net.sf.milkfish.systrace.core.annotation;
 
 import javax.inject.Inject;
 
+import net.sf.milkfish.systrace.core.event.ISystraceEvent;
 import net.sf.milkfish.systrace.core.service.ISystraceService;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
@@ -33,7 +34,7 @@ public class TraceEventSupplier extends ExtendedObjectSupplier {
 
     private final String fReference = "Some reference";
  
-    @Inject private ISystraceService systraceService;
+   @Inject private IEclipseContext _context;
     
     @Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor,
@@ -47,7 +48,7 @@ public class TraceEventSupplier extends ExtendedObjectSupplier {
          * IRequestor: the requesting location: the method, field, constructor; can re-trigger
          */
     	
-    	ITmfEvent event = systraceService.getCurrentEvent();
+    	ISystraceEvent event = (ISystraceEvent)_context.get(ISystraceEvent.CONTEXT_KEY);
     	
 //    	String str = requestor.getRequestingObjectClass().getCanonicalName();
 //    	

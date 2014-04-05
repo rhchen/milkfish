@@ -1,34 +1,21 @@
 package net.sf.milkfish.systrace.core.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import net.sf.milkfish.systrace.core.annotation.TraceEvent;
 import net.sf.milkfish.systrace.core.annotation.TraceEventInput;
-import net.sf.milkfish.systrace.core.annotation.TraceEventOutput;
+import net.sf.milkfish.systrace.core.event.ISystraceEvent;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
-import net.sf.milkfish.systrace.core.event.impl.TmfEvent_1;
-import net.sf.milkfish.systrace.core.event.impl.TmfEvent_2;
 import net.sf.milkfish.systrace.core.pipe.impl.TracePipe;
 import net.sf.milkfish.systrace.core.service.ISystraceService;
-import net.sf.milkfish.systrace.core.state.SystraceStrings;
 
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
-import org.eclipse.linuxtools.tmf.core.event.TmfEvent;
-import org.eclipse.linuxtools.tmf.core.event.TmfEventField;
-import org.eclipse.linuxtools.tmf.core.event.TmfEventType;
-import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
-import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimestamp;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfContext;
-import org.eclipse.linuxtools.tmf.core.trace.TmfLongLocation;
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.di.extensions.EventTopic;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.google.common.collect.Lists;
@@ -51,11 +38,7 @@ public class SystraceService implements ISystraceService{
 		
 	}
 	
-	public void registPipe(TracePipe pipe, SystraceEvent event){
-		
-		currentEvent= event;
-		
-		ContextInjectionFactory.invoke(pipe, TraceEventInput.class, _context);
+	public void registPipe(TracePipe pipe){
 		
 		pipeList.add(pipe);
 	}
@@ -64,7 +47,21 @@ public class SystraceService implements ISystraceService{
 		return currentEvent;
 	}
 	
+	@Inject
+	@Optional
+	@SuppressWarnings("restriction")
+	private void getNotified(@EventTopic(ISystraceEvent.TOPIC_EVENT_NEW) SystraceEvent event) {
+		
+		/* To avoid context set exception, data must not be interface */
+		_context.set(ISystraceEvent.CONTEXT_KEY, event);
+		
+		for(TracePipe pipe : pipeList){
+			
+			ContextInjectionFactory.invoke(pipe, TraceEventInput.class, _context);
+			
+		}
 	
+	} 
 	
 }
  

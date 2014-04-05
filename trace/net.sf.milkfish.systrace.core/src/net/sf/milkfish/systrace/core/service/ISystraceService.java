@@ -11,7 +11,6 @@ public interface ISystraceService {
 
 	public int echo();
 	
-	public void registPipe(TracePipe pipe, SystraceEvent event);
+	public void registPipe(TracePipe pipe);
 	
-	public SystraceEvent getCurrentEvent();
 }

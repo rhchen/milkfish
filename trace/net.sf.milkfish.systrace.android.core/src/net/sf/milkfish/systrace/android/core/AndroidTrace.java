@@ -15,6 +15,7 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
+import net.sf.milkfish.systrace.core.event.ISystraceEvent;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
 import net.sf.milkfish.systrace.core.pipe.impl.TracePipe;
 import net.sf.milkfish.systrace.core.service.ISystraceService;
@@ -25,6 +26,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
 import org.eclipse.linuxtools.tmf.core.event.TmfEventField;
@@ -81,6 +83,8 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 	
 	@Inject private TracePipe pipe;
 	
+	@Inject private IEventBroker eventBroker;
+	
 	@Override
 	public IStatus validate(IProject project, String path) {
 
@@ -93,6 +97,10 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		}
 
 		int echo = systraceService.echo();
+		
+		systraceService.registPipe(pipe);
+		
+		pipe.echo();
 		
 		System.out.println("AndroidTrace.validate "+ echo);
 		
@@ -188,7 +196,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		if(pos == getNbEvents()) return null;
 		
 		final String title = fEventTypes[0];
-		long ts = System.currentTimeMillis()*1000;
+		long ts = System.currentTimeMillis()*1000000;
 
 		TmfTimestamp timestamp = new TmfTimestamp(ts,ITmfTimestamp.MICROSECOND_SCALE);
 
@@ -218,9 +226,8 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		
 		SystraceEvent event = new SystraceEvent(this, pos, timestamp, null,new TmfEventType(title, title, null), content, timestamp.toString(), rnd.nextInt(10), title);
 		
-		systraceService.registPipe(pipe, event);
-		
-		pipe.echo();
+		/* To avoid context set exception, data must not be interface */
+		eventBroker.post(ISystraceEvent.TOPIC_EVENT_NEW, event);
 		
 		return event;
 	}
