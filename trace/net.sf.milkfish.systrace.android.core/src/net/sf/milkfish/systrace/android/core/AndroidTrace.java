@@ -15,6 +15,7 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
+import net.sf.milkfish.systrace.android.core.util.PageTableHelper;
 import net.sf.milkfish.systrace.core.event.ISystraceEvent;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
 import net.sf.milkfish.systrace.core.pipe.impl.TracePipe;
@@ -143,6 +144,14 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 			throw new TmfTraceException(e.getMessage());
 		} catch (IOException e) {
 			throw new TmfTraceException(e.getMessage());
+		}
+		
+		try {
+			
+			PageTableHelper.getInstance().createPageTable(fFile);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

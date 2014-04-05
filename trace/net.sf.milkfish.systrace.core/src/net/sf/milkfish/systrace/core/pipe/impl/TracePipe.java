@@ -53,6 +53,6 @@ public class TracePipe implements ITracePipe {
 	@TraceEventInput
 	public void callBack(@TraceEvent ITmfEvent event){
 		
-		System.out.println("TracePipe.callBack "+ event.getReference());
+		//System.out.println("TracePipe.callBack "+ event.getReference());
 	}
 }
