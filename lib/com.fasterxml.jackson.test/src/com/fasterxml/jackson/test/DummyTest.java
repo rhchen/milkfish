@@ -81,7 +81,7 @@ public class DummyTest {
 			
 			String str = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
 			
-			System.out.println(str);
+			//System.out.println(str);
 	
 			/* Print to file */
 			PrintWriter out = new PrintWriter("data/chromeos_system_trace_formated.json");
@@ -149,7 +149,9 @@ public class DummyTest {
 	 
 				// get the value from href attribute
 				//System.out.println("text : " + link.data());
-	 
+				PrintWriter out = new PrintWriter("data/android_systrace.txt");
+				out.println(link.data());
+				out.close();
 			}
 	        
 		} catch (IOException e) {

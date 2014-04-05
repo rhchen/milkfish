@@ -204,7 +204,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		if(pos == getNbEvents()) return null;
 		
 		final String title = fEventTypes[0];
-		long ts = System.currentTimeMillis()*1000000;
+		long ts = System.currentTimeMillis()*1000;
 
 		TmfTimestamp timestamp = new TmfTimestamp(ts,ITmfTimestamp.MICROSECOND_SCALE);
 
