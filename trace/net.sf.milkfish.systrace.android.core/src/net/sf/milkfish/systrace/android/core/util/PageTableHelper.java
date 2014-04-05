@@ -32,7 +32,7 @@ public class PageTableHelper {
 	 * A rank represents the order the a record in the trace
 	 * 
 	 * URI. file URI to identify the input trace
-	 * BiMap<rank of the data, page number>
+	 * BiMap<rank start of data, page number>
 	 */
 	private static ConcurrentMap<URI, BiMap<Long, Integer>> rankTables = Maps.<URI, BiMap<Long, Integer>>newConcurrentMap();
 	
