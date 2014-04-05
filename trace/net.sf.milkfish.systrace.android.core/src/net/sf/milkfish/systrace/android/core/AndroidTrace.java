@@ -72,10 +72,10 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 	private static final TmfContext NULLCONTEXT = new TmfContext(NULLLOCATION,
 			-1L);
 
-	private long fSize;
+	
 	private long fOffset;
-	private File fFile;
-	private String[] fEventTypes;
+	
+	private String[] fEventTypes = new String[] { "sched_switch", "irq" }; // 64 values of types according to //$NON-NLS-1$;
 	private FileChannel fFileChannel;
 	private MappedByteBuffer fMappedByteBuffer;
 
@@ -119,21 +119,18 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 		super.initTrace(resource, path, type);
 
-		fFile = new File(path);
+		File fFile = new File(path);
 
-		fSize = fFile.length();
+		long fSize = fFile.length();
 
-		if (fSize == 0)
-			throw new TmfTraceException("file is empty"); //$NON-NLS-1$
-
-		fEventTypes = new String[] { "sched_switch", "irq" }; // 64 values of types according to //$NON-NLS-1$
+		if (fSize == 0) throw new TmfTraceException("file is empty"); //$NON-NLS-1$
 		
-		setNbEvents(10000);
+		int nbEvents = 1 + (int)fSize/1024/1024;
 		
-		// the 'spec'
-		if (getNbEvents() < 1) {
-			throw new TmfTraceException("Trace does not have any events"); //$NON-NLS-1$
-		}
+		/* A guess to number of events */
+		setNbEvents(nbEvents * 10000);
+		
+		if (getNbEvents() < 1) throw new TmfTraceException("Trace does not have any events"); //$NON-NLS-1$
 
 		try {
 
@@ -148,7 +145,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		
 		try {
 			
-			PageTableHelper.getInstance().createPageTable(fFile);
+			PageTableHelper.getInstance().createPageTable(fFile.toURI());
 		
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -163,15 +160,19 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 	@Override
 	public ITmfContext seekEvent(ITmfLocation location) {
+		
 		TmfLongLocation nl = (TmfLongLocation) location;
-		if (location == null) {
-			nl = new TmfLongLocation(0L);
-		}
+		
+		if (location == null) nl = new TmfLongLocation(0L);
+		
 		try {
+			
 			seek(nl.getLocationInfo());
+		
 		} catch (IOException e) {
 			return NULLCONTEXT;
 		}
+		
 		return new TmfContext(nl, nl.getLocationInfo());
 	}
 
@@ -195,9 +196,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 	@Override
 	public ITmfEvent parseEvent(ITmfContext context) {
 
-		if ((context == null) || (context.getRank() == -1)) {
-			return null;
-		}
+		if ((context == null) || (context.getRank() == -1)) return null;
 
 		long pos = context.getRank();
 		
