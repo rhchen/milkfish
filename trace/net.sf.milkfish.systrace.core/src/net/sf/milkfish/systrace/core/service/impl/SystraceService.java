@@ -125,11 +125,11 @@ public class SystraceService implements ISystraceService{
 		
 		int pages = (int) (size / M_BYTE);
 		
-		long rank = 0;
+		long rank          = 0;
 		long positionStart = 0;
 		long positionEnd   = 0;
-		String firstLine = null;
-		String lastLine  = "";
+		String firstLine   = null;
+		String lastLine    = "";
 		
 		TreeBasedTable<Integer, Long, Long> pageTable = TreeBasedTable.<Integer, Long, Long>create();
 		BiMap<Long, Integer> rankTable = HashBiMap.<Long, Integer>create();

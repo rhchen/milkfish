@@ -69,5 +69,6 @@
   	<module>../../lib/com.fasterxml.jackson.dataformat.xml</module>
   	<module>../net.sf.milkfish.systrace.android.core</module>
   	<module>../net.sf.milkfish.systrace.android.ui</module>
+  	<module>../../lib/net.sf.commonstringutil</module>
   </modules>
 </project>
