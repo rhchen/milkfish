@@ -12,6 +12,7 @@ import java.nio.channels.FileChannel.MapMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -66,18 +67,16 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 	private static final int EVENT_SIZE = 8; // according to spec
 
 	private TmfLongLocation fCurrentLocation;
-	private static final TmfLongLocation NULLLOCATION = new TmfLongLocation(
-			(Long) null);
-	private static final TmfContext NULLCONTEXT = new TmfContext(NULLLOCATION,
-			-1L);
+	private static final TmfLongLocation NULLLOCATION = new TmfLongLocation((Long) null);
+	private static final TmfContext NULLCONTEXT = new TmfContext(NULLLOCATION,-1L);
 
-	
 	private long fOffset;
 	
 	private String[] fEventTypes = new String[] { "sched_switch", "irq" }; // 64 values of types according to //$NON-NLS-1$;
 	private FileChannel fFileChannel;
 	private MappedByteBuffer fMappedByteBuffer;
-
+	private File fFile;
+	
 	/* Reference to class ModelAddon, there inject the require instance */
 	@Inject private ISystraceService systraceService;
 	
@@ -118,7 +117,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 		super.initTrace(resource, path, type);
 
-		File fFile = new File(path);
+		fFile = new File(path);
 
 		long fSize = fFile.length();
 
@@ -137,7 +136,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 			
 			seek(0);
 
-			systraceService.addTrace(fFile.toURI());
+			systraceService.addTrace(fFile.toURI(), this);
 			
 		} catch (FileNotFoundException e) {
 			throw new TmfTraceException(e.getMessage());
@@ -190,6 +189,33 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 	@Override
 	public ITmfEvent parseEvent(ITmfContext context) {
+		
+		if ((context == null) || (context.getRank() == -1)) return null;
+
+		long pos = context.getRank();
+		
+		/* escapse on count == NBevents */
+		if(pos == getNbEvents()) return null;
+		
+		fCurrentLocation = new TmfLongLocation(pos);
+		
+		try {
+			
+			ITmfEvent event = systraceService.getTmfEvent(fFile.toURI(), pos);
+		
+			/* To avoid context set exception, data must not be interface */
+			eventBroker.post(ISystraceEvent.TOPIC_EVENT_NEW, event);
+			
+			return event;
+			
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public ITmfEvent parseEvent2(ITmfContext context) {
 
 		if ((context == null) || (context.getRank() == -1)) return null;
 

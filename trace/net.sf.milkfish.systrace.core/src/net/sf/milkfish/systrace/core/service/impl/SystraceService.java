@@ -3,19 +3,24 @@ package net.sf.milkfish.systrace.core.service.impl;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import net.sf.commonstringutil.StringUtil;
 import net.sf.milkfish.systrace.core.annotation.TraceEventInput;
+import net.sf.milkfish.systrace.core.cache.TraceCache;
 import net.sf.milkfish.systrace.core.event.ISystraceEvent;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
 import net.sf.milkfish.systrace.core.pipe.impl.TracePipe;
@@ -26,10 +31,13 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.di.extensions.EventTopic;
+import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.TreeBasedTable;
@@ -64,6 +72,8 @@ public class SystraceService implements ISystraceService{
 	 */
 	private static final ConcurrentMap<URI, BiMap<Long, Integer>> rankTables = Maps.<URI, BiMap<Long, Integer>>newConcurrentMap();
 	
+	private static final ConcurrentMap<URI, TraceCache> cacheTables = Maps.<URI, TraceCache>newConcurrentMap();
+	
 	public int echo(){
 		
 		JsonFactory f = new JsonFactory();
@@ -97,16 +107,76 @@ public class SystraceService implements ISystraceService{
 	
 	} 
 	
-	public void addTrace(URI fileURI) throws IOException{
+	/* RH. Fix me.
+	 * could avoid pass ITmfTrace? */
+	public void addTrace(URI fileUri, ITmfTrace tmfTrace) throws IOException{
 		
 		/* RH. Fix me.
-		 * Should be in a separate thread
-		 */
-		createPageTable(fileURI);
+		 * Should be in a separate thread*/
+		createPageTable(fileUri);
 		
-		traceList.add(fileURI);
+		createCacheTable(fileUri, tmfTrace);
+		
+		traceList.add(fileUri);
 	}
 	
+	public TreeBasedTable<Integer, Long, Long> getPageTable(URI fileUri){
+		
+		return pageTables.get(fileUri);
+		
+	}
+	
+	public BiMap<Long, Integer> getRankTable(URI fileUri){
+		
+		return rankTables.get(fileUri);
+	}
+	
+	private void createCacheTable(URI fileUri, ITmfTrace tmfTrace) throws FileNotFoundException{
+		
+		FileInputStream fis = new FileInputStream(fileUri.getPath());
+		
+		FileChannel fileChannel = fis.getChannel();
+		
+		TraceCache cache = new TraceCache();
+		
+		cache.init(fileChannel, pageTables.get(fileUri), rankTables.get(fileUri), tmfTrace);
+		
+		cacheTables.put(fileUri, cache);
+		
+	}
+	
+	public ITmfEvent getTmfEvent(URI fileUri, long rank) throws ExecutionException{
+		
+		BiMap<Long, Integer> bMap = rankTables.get(fileUri);
+		
+		TreeMap<Long, Integer> tMap = Maps.<Long, Integer>newTreeMap();
+		
+		tMap.putAll(bMap);
+		
+		long prevK = tMap.firstKey();
+		
+		if(rank >= prevK) {
+			
+			Iterator<Long> it = tMap.keySet().iterator();
+			
+			while(it.hasNext()){
+				
+				long k = it.next();
+				
+				if(rank <= k) break;
+				
+				prevK = k;
+				
+			}
+			
+		}
+		
+		int pageNumber = rankTables.get(fileUri).get(prevK);
+		
+		ImmutableMap<Long, ITmfEvent> data = cacheTables.get(fileUri).get(pageNumber);
+		
+		return data.get(rank);
+	}
 	/**
 	 * 
 	 * Create page table to avoid load all trace data into memory
@@ -217,7 +287,17 @@ public class SystraceService implements ISystraceService{
 			
 			String line = in.readLine();
 			
-			positionStart += line.getBytes().length;
+			/*
+			 * RH. Fix me
+			 * A hack of the readline. case the systrace input contain \n\ in every line
+			 * increase the length to workaround it
+			 * Ex. 
+			 *  # tracer: nop\n\
+				#\n\
+				#           TASK-PID    CPU#    TIMESTAMP  FUNCTION\n\
+				#              | |       |          |         |\n\
+			 */
+			positionStart += line.getBytes().length + 1;
 		}
 		
 		return positionStart;
