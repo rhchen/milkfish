@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import net.sf.commonstringutil.StringUtil;
 import net.sf.milkfish.systrace.core.annotation.TraceEventInput;
 import net.sf.milkfish.systrace.core.event.ISystraceEvent;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
@@ -128,7 +129,6 @@ public class SystraceService implements ISystraceService{
 		long rank          = 0;
 		long positionStart = 0;
 		long positionEnd   = 0;
-		String firstLine   = null;
 		String lastLine    = "";
 		
 		TreeBasedTable<Integer, Long, Long> pageTable = TreeBasedTable.<Integer, Long, Long>create();
@@ -148,11 +148,14 @@ public class SystraceService implements ISystraceService{
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
 			
+			/* Do a guess to skip the first 3 lines */
+			positionStart = i == 0 ? skipLines(in, 3) : positionStart;
+			
 			for (String line = in.readLine(); line != null; line = in.readLine()) {
 				
-				firstLine = firstLine == null ? line : firstLine;
 				lastLine = line;
-				rank++;
+				
+				rank = StringUtil.startsWithIgnoreCase(line, "#") == true ? rank : rank+1;
 				
 			}//for
 			
@@ -170,6 +173,51 @@ public class SystraceService implements ISystraceService{
 		pageTables.put(fileUri, pageTable);
 		
 		rankTables.put(fileUri, rankTable);
+	}
+	
+	/**
+	 * 
+	 * Skips number of lines to reduce dummy check
+	 * <p>
+	 * In Systrace header
+	 * </p>
+	 * <pre>
+	  
+		  var linuxPerfData = "\
+		# tracer: nop\n\
+		#\n\
+		#           TASK-PID    CPU#    TIMESTAMP  FUNCTION\n\
+		#              | |       |          |         |\n\
+		
+	 * </pre>
+	 * <p>
+	 * In Ftrace header
+	 * </p>
+	 * <pre>
+		# tracer: nop
+		#
+		#           TASK-PID    CPU#    TIMESTAMP  FUNCTION
+		#              | |       |          |         |
+	 
+	 * </pre>
+	 * 
+	 * @param in BufferedReader
+	 * @param linesToSkip Numbers of line to skip
+	 * @return The position start after skip
+	 * @throws IOException
+	 */
+	private long skipLines(BufferedReader in, int linesToSkip) throws IOException{
+		
+		long positionStart = 0;
+		
+		for(int i=0; i<linesToSkip; i++){
+			
+			String line = in.readLine();
+			
+			positionStart += line.getBytes().length;
+		}
+		
+		return positionStart;
 	}
 }
  
