@@ -906,7 +906,7 @@ public final class StringUtil {
 
     /**
      * 
-     * @param s
+     * @param s the input string to be checked
      * @param with
      * @see java.lang.String#startsWith(String)
      * @return

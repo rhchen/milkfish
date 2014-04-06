@@ -155,6 +155,7 @@ public class SystraceService implements ISystraceService{
 				
 				lastLine = line;
 				
+				/* Rank increase on # not appears */
 				rank = StringUtil.startsWithIgnoreCase(line, "#") == true ? rank : rank+1;
 				
 			}//for
@@ -173,6 +174,8 @@ public class SystraceService implements ISystraceService{
 		pageTables.put(fileUri, pageTable);
 		
 		rankTables.put(fileUri, rankTable);
+		
+		fis.close();
 	}
 	
 	/**

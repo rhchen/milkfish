@@ -18,6 +18,27 @@ public class SystraceEvent extends TmfEvent implements ISystraceEvent, ITmfEvent
 	/* eventName is ftrace event type. ex sched_switch */
     private final String eventName;
     
+    /**
+     * 
+     * @param trace The trace implements ITmfTrace
+     * @param rank The order of the event in trace, skip "#"
+     * @param timestamp The ITmfTimestamp format timestamp object
+     * @param source TBD
+     * @param type TBD
+     * @param content TBD
+     * @param reference In Ftrace is the postfix of the record, 
+     *  <pre>
+     *  Ex prev_comm=swapper prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=kworker/0:0 next_pid=13696 next_prio=120
+     *  </pre>
+     * @param sourceCPU In Ftrace is the CPU, 
+     *  <pre>
+     *  Ex [000]
+     *  </pre>
+     * @param eventName In Ftrace is the event type
+     *  <pre>
+     *  Ex. sched_switch
+     *  </pre>
+     */
 	public SystraceEvent(ITmfTrace trace, long rank, ITmfTimestamp timestamp,
 			String source, ITmfEventType type, ITmfEventField content,
 			String reference, int sourceCPU, String eventName) {
