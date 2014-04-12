@@ -26,6 +26,7 @@ import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
 import net.sf.milkfish.systrace.core.pipe.impl.TracePipe;
 import net.sf.milkfish.systrace.core.service.ISystraceService;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
@@ -163,9 +164,9 @@ public class SystraceService implements ISystraceService{
 				
 				long k = it.next();
 				
-				if(rank <= k) break;
-				
 				prevK = k;
+				
+				if(rank <= k) break;
 				
 			}
 			
@@ -174,6 +175,8 @@ public class SystraceService implements ISystraceService{
 		int pageNumber = rankTables.get(fileUri).get(prevK);
 		
 		ImmutableMap<Long, ITmfEvent> data = cacheTables.get(fileUri).get(pageNumber);
+		
+		Assert.isNotNull(data);
 		
 		return data.get(rank);
 	}

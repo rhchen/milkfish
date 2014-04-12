@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 import net.sf.milkfish.systrace.android.core.Activator;
@@ -32,6 +34,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.TreeBasedTable;
 
 public class TestAndroidTrace {
 
@@ -94,17 +99,56 @@ private static IEclipseContext _context;
 	    
 		Assert.assertNotNull(echo);
 		
+		long timeStart = System.currentTimeMillis();
+		
 		_systraceService.addTrace(_file.toURI(), _androidTrace);
 		
+		long delta = System.currentTimeMillis() - timeStart;
+		
+		System.out.println("TestAndroidTrace.testEcho2 addTrace = "+ delta);
+		
+		TreeBasedTable<Integer, Long, Long> pageTable = _systraceService.getPageTable(_file.toURI());
+		
+		int pages = pageTable.size();
+		
+		BiMap<Long, Integer> rankTable = _systraceService.getRankTable(_file.toURI());
+		
+		Iterator<Entry<Long, Integer>> it = rankTable.entrySet().iterator();
+		
+		while(it.hasNext()){
+			
+			Entry<Long, Integer> entry = it.next();
+			
+			String entryData = entry.getKey() +" "+ entry.getValue();
+			
+			System.out.println("TestAndroidTrace.testEcho2 entryData = "+ entryData);
+		}
+		
+		timeStart = System.currentTimeMillis();
 		
 		ITmfEvent e_0 = _systraceService.getTmfEvent(_file.toURI(), 0);
 		
+		delta = System.currentTimeMillis() - timeStart;
+		
+		System.out.println("TestAndroidTrace.testEcho2 e_0 delta = "+ delta);
+		
 		Assert.assertNotNull(e_0);
 		
-		ITmfEvent e_1 = _systraceService.getTmfEvent(_file.toURI(), 1);
-		
-		Assert.assertNotNull(e_1);
-		
+		for(int i=0; i<30; i++){
+			
+			timeStart = System.currentTimeMillis();
+			
+			long rank = i*1000;
+			
+			ITmfEvent e_1 = _systraceService.getTmfEvent(_file.toURI(), rank);
+			
+			delta = System.currentTimeMillis() - timeStart;
+			
+			System.out.println("TestAndroidTrace.testEcho2 "+ rank +" timestamp = "+ e_1.getTimestamp() +" delta = "+ delta);
+			
+			Assert.assertNotNull(e_1);
+		}
+			
 	}
 	
 	
