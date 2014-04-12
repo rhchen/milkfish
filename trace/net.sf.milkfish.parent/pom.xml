@@ -70,5 +70,6 @@
   	<module>../net.sf.milkfish.systrace.android.core</module>
   	<module>../net.sf.milkfish.systrace.android.ui</module>
   	<module>../../lib/net.sf.commonstringutil</module>
+  	<module>../net.sf.milkfish.systrace.android.core.test</module>
   </modules>
 </project>
