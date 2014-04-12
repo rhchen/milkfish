@@ -6,12 +6,15 @@ import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.internal.console.IInternalConsoleConstants;
 import org.eclipse.ui.internal.ide.IDEInternalWorkbenchImages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.osgi.framework.Bundle;
@@ -24,6 +27,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     // The default perspective
     private static final String PERSPECTIVE_ID = "net.sf.milkfish.perspective"; //$NON-NLS-1$
 
+    /* IDEWorkbenchPlugin Images Path */
     private final static String ICONS_PATH = "$nl$/icons/full/"; //$NON-NLS-1$
     private final static String PATH_ELOCALTOOL = ICONS_PATH + "elcl16/"; //$NON-NLS-1$
     private final static String PATH_DLOCALTOOL = ICONS_PATH + "dlcl16/"; //$NON-NLS-1$
@@ -31,7 +35,13 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     private final static String PATH_DTOOL = ICONS_PATH + "dtool16/"; //$NON-NLS-1$
     private final static String PATH_OBJECT = ICONS_PATH + "obj16/"; //$NON-NLS-1$
     private final static String PATH_WIZBAN = ICONS_PATH + "wizban/";//$NON-NLS-1$
-
+    
+    /* ConsolePlugin Images Path */
+ 	private final static String PATH_LOCALTOOL= ICONS_PATH + "clcl16/"; //basic colors - size 16x16 //$NON-NLS-1$
+ 	private final static String PATH_DLCL= ICONS_PATH + "dlcl16/"; //disabled - size 16x16 //$NON-NLS-1$
+ 	private final static String PATH_ELCL= ICONS_PATH + "elcl16/"; //enabled - size 16x16 //$NON-NLS-1$
+ 	private final static String PATH_CVIEW= ICONS_PATH + "cview16/"; // views //$NON-NLS-1$
+ 	
     // ------------------------------------------------------------------------
     // Operations
     // ------------------------------------------------------------------------
@@ -61,7 +71,42 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     // ------------------------------------------------------------------------
     private void declareWorkbenchImages() {
 
-        Bundle ideBundle = Platform.getBundle(IDEWorkbenchPlugin.IDE_WORKBENCH);
+    	load_IDEWorkbenchPlugin_Images();
+    	
+    	load_ConsolePlugin_Images();
+    }
+
+    @SuppressWarnings("restriction")
+	private void load_ConsolePlugin_Images(){
+    
+    	Bundle ideBundle = Platform.getBundle(ConsolePlugin.getUniqueIdentifier());
+    	
+    	//local toolbars
+    	declareWorkbenchImage(ideBundle, IConsoleConstants.IMG_LCL_CLEAR, PATH_LOCALTOOL + "clear_co.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_LCL_PIN, PATH_LOCALTOOL + "pin.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_LCL_LOCK, PATH_LOCALTOOL + "lock_co.gif", false); //$NON-NLS-1$
+			
+		// disabled local toolbars
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_DLCL_CLEAR, PATH_DLCL + "clear_co.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_DLCL_PIN, PATH_DLCL + "pin.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_DLCL_LOCK, PATH_DLCL + "lock_co.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_DLCL_CLOSE, PATH_DLCL + "rem_co.gif", false); //$NON-NLS-1$
+		
+		// enabled local toolbars
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_ELCL_CLEAR, PATH_ELCL + "clear_co.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_ELCL_PIN, PATH_ELCL + "pin.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_ELCL_LOCK, PATH_ELCL + "lock_co.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_ELCL_CLOSE, PATH_ELCL + "rem_co.gif", false); //$NON-NLS-1$
+    	declareWorkbenchImage(ideBundle, IInternalConsoleConstants.IMG_ELCL_NEW_CON, PATH_ELCL + "new_con.gif", false); //$NON-NLS-1$
+		
+		// Views
+    	declareWorkbenchImage(ideBundle, IConsoleConstants.IMG_VIEW_CONSOLE, PATH_CVIEW + "console_view.gif", false); //$NON-NLS-1$				
+    }
+    
+    @SuppressWarnings("restriction")
+	private void load_IDEWorkbenchPlugin_Images(){
+    	
+    	Bundle ideBundle = Platform.getBundle(IDEWorkbenchPlugin.IDE_WORKBENCH);
 
         declareWorkbenchImage(ideBundle, IDEInternalWorkbenchImages.IMG_ETOOL_BUILD_EXEC,
                 PATH_ETOOL + "build_exec.gif", false); //$NON-NLS-1$
@@ -149,8 +194,9 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
                 PATH_ELOCALTOOL + "hierarchicalLayout.gif", true); //$NON-NLS-1$
         declareWorkbenchImage(ideBundle, IDEInternalWorkbenchImages.IMG_ETOOL_PROBLEM_CATEGORY,
                 PATH_ETOOL + "problem_category.gif", true); //$NON-NLS-1$
+        
     }
-
+    
     /**
      * Declares an IDE-specific workbench image.
      *
