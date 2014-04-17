@@ -185,7 +185,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 			
 		}//while
 
-		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.MICROSECOND_SCALE);
+		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
@@ -254,7 +254,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		
 		final String title = "sched_wakeup";
 		
-		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.MICROSECOND_SCALE);
+		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
@@ -333,7 +333,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		
 		final String title = "sched_switch";
 		
-		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.MICROSECOND_SCALE);
+		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 

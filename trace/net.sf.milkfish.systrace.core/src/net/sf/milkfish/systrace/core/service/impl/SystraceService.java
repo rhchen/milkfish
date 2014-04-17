@@ -205,9 +205,9 @@ public class SystraceService implements ISystraceService{
 		
 		int pages = (int) (size / M_BYTE);
 		
-		long rank          = 0;
-		long positionStart = 0;
-		long positionEnd   = 0;
+		long rank          = -1L;
+		long positionStart = 0L;
+		long positionEnd   = 0L;
 		String lastLine    = "";
 		
 		TreeBasedTable<Integer, Long, Long> pageTable = TreeBasedTable.<Integer, Long, Long>create();
@@ -246,8 +246,8 @@ public class SystraceService implements ISystraceService{
 			
 			pageTable.put(i, positionStart, positionEnd);
 			
-			rank = i == pages ? rank : rank-1;
-					
+			rank--;
+			
 			rankTable.put(rank, i);
 			
 			positionStart = positionEnd;
@@ -312,8 +312,7 @@ public class SystraceService implements ISystraceService{
 			positionStart += line.getBytes().length + 1; // +1 cause "\" character
 		}
 		
-		/* +1 to return to next line start */
-		return positionStart + 1;
+		return positionStart;
 	}
 }
  
