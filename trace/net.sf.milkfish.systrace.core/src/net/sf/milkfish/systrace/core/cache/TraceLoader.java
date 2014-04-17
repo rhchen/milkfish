@@ -99,6 +99,9 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 			
 			//boolean isFind = pt_sched_switch.matcher(line).find();
 			
+			/* Ignore space line */
+			if(StringUtil.ltrim(line) == null) continue;
+			
 			boolean isFind = StringUtil.startsWithIgnoreCase(line, "#");
 			
 			if(!isFind){
@@ -121,6 +124,9 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 				}else{
 					
+					if(line.length() == 2){
+						System.out.println();
+					}
 					ITmfEvent event = handleUndefinedEvent(line);
 					
 					dataMap.put(this._currentRank, event);

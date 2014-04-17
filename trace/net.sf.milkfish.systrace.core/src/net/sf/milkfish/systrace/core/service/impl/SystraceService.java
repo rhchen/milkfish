@@ -234,6 +234,9 @@ public class SystraceService implements ISystraceService{
 				
 				lastLine = line;
 				
+				/* Ignore space line */
+				if(StringUtil.ltrim(line) == null) continue;
+					
 				/* Rank increase on # not appears */
 				rank = StringUtil.startsWithIgnoreCase(line, "#") == true ? rank : rank+1;
 				
