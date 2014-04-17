@@ -23,7 +23,6 @@ import org.eclipse.linuxtools.tmf.core.event.TmfEventField;
 import org.eclipse.linuxtools.tmf.core.event.TmfEventType;
 import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
 import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimestamp;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 import org.eclipse.linuxtools.tmf.core.trace.TmfLongLocation;
 
 import com.google.common.cache.CacheLoader;
@@ -54,17 +53,14 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 	 */
 	private TreeBasedTable<Integer, Long, Long> _pageTable;
 	
-	private ITmfTrace _tmfTrace;
-	
 	private long _currentRank;
 	
-	public TraceLoader(FileChannel fileChannel, TreeBasedTable<Integer, Long, Long> pageTable, BiMap<Long, Integer> rankTable, ITmfTrace tmfTrace) {
+	public TraceLoader(FileChannel fileChannel, TreeBasedTable<Integer, Long, Long> pageTable, BiMap<Long, Integer> rankTable) {
 		
 		super();
 		this._fileChannel = fileChannel;
 		this._pageTable   = pageTable;
 		this._rankTable   = rankTable;
-		this._tmfTrace    = tmfTrace;
 	}
 	
 	@Override
@@ -130,9 +126,13 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					dataMap.put(this._currentRank, event);
 				}
 				
-			}//if
+			}else{
+				
+				System.out.println("line ignore "+ line);
+			}
 			
 		}//for
+		
 		
 		return builder.putAll(dataMap).build();
 	}
@@ -191,7 +191,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		fields[0] = tmfEventField;
 		
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
-		SystraceEvent event = new SystraceEvent(_tmfTrace, _currentRank, ts, null,new TmfEventType(title, title, null), content, suffStr, cpuId, title);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(title, title, null), content, suffStr, cpuId, title);
 		
 		return event;
 	}
@@ -263,7 +263,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		fields[1] = tmfEventField_TID;
 		
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
-		SystraceEvent event = new SystraceEvent(_tmfTrace, _currentRank, ts, null,new TmfEventType(title, title, null), content, suffStr, cpuId, title);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(title, title, null), content, suffStr, cpuId, title);
 		
 		return event;
 	}
@@ -350,7 +350,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 
-		SystraceEvent event = new SystraceEvent(_tmfTrace, _currentRank, ts, null,new TmfEventType(title, title, null), content, suffStr, cpuId, title);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(title, title, null), content, suffStr, cpuId, title);
 		
 		return event;
 	}

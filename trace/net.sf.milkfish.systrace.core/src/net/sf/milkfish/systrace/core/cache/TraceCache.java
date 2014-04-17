@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
@@ -29,9 +28,9 @@ public class TraceCache implements RemovalListener<Integer, ImmutableMap<Long, I
 	 * @param pageTable
 	 * @param rankTable
 	 */
-	public void init(FileChannel fileChannel, TreeBasedTable<Integer, Long, Long> pageTable, BiMap<Long, Integer> rankTable, ITmfTrace tmfTrace){
+	public void init(FileChannel fileChannel, TreeBasedTable<Integer, Long, Long> pageTable, BiMap<Long, Integer> rankTable){
 		
-		traceLoader = new TraceLoader(fileChannel, pageTable, rankTable, tmfTrace);
+		traceLoader = new TraceLoader(fileChannel, pageTable, rankTable);
 		
 		cache = CacheBuilder.newBuilder().
 				maximumSize(10).

@@ -25,6 +25,7 @@ import net.sf.milkfish.systrace.core.state.SystraceStrings;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -136,7 +137,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 			
 			seek(0);
 
-			systraceService.addTrace(fFile.toURI(), this);
+			systraceService.addTrace(fFile.toURI());
 			
 		} catch (FileNotFoundException e) {
 			throw new TmfTraceException(e.getMessage());
@@ -202,8 +203,12 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		try {
 			
 			ITmfEvent event = systraceService.getTmfEvent(fFile.toURI(), pos);
-		
-			/* To avoid context set exception, data must not be interface */
+
+			if(event == null) return null;
+			
+			event = ((ISystraceEvent) event).setTrace(this);
+			
+			/* To avoid context set exception, data must NOT be interface */
 			eventBroker.post(ISystraceEvent.TOPIC_EVENT_NEW, event);
 			
 			return event;

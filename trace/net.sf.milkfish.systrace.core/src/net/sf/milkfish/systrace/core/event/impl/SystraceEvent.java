@@ -7,6 +7,7 @@ import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEventType;
 import org.eclipse.linuxtools.tmf.core.event.TmfEvent;
+import org.eclipse.linuxtools.tmf.core.event.TmfEventType;
 import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
 import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 
@@ -56,6 +57,23 @@ public class SystraceEvent extends TmfEvent implements ISystraceEvent, ITmfEvent
 		return eventName;
 	}
     
-	
+	/**
+     * Copy constructor
+     *
+     * @param event the original event
+     */
+    public ISystraceEvent setTrace(final ITmfTrace fTrace) {
+    	
+        final long fRank = this.getRank();
+        final ITmfTimestamp fTimestamp = this.getTimestamp();
+        final String fSource = this.getSource();
+        final ITmfEventType fType = this.getType();
+        final ITmfEventField fContent = this.getContent();
+        final String fReference = this.getReference();
+        final int sourceCPU = this.getCPU();
+        final String eventName = this.getEventName();
+        
+        return new SystraceEvent(fTrace, fRank, fTimestamp, fSource, fType, fContent, fReference, sourceCPU, eventName);
+    }
     
 }

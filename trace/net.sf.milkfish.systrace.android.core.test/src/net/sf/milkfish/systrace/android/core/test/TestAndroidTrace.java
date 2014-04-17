@@ -101,7 +101,7 @@ private static IEclipseContext _context;
 		
 		long timeStart = System.currentTimeMillis();
 		
-		_systraceService.addTrace(_file.toURI(), _androidTrace);
+		_systraceService.addTrace(_file.toURI());
 		
 		long delta = System.currentTimeMillis() - timeStart;
 		

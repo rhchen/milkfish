@@ -18,11 +18,12 @@ public interface ISystraceService {
 	
 	public void registPipe(TracePipe pipe);
 	
-	public void addTrace(URI fileURI, ITmfTrace tmfTrace) throws IOException;
+	public void addTrace(URI fileURI) throws IOException;
 	
 	public TreeBasedTable<Integer, Long, Long> getPageTable(URI fileUri);
 	
 	public BiMap<Long, Integer> getRankTable(URI fileUri);
 	
 	public ITmfEvent getTmfEvent(URI fileUri, long rank) throws ExecutionException;
+	
 }

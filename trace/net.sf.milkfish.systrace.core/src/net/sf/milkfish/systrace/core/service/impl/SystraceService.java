@@ -33,6 +33,10 @@ import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.di.extensions.EventTopic;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
+import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
+import org.eclipse.linuxtools.tmf.core.event.ITmfEventType;
+import org.eclipse.linuxtools.tmf.core.event.TmfEvent;
+import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
 import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -110,17 +114,19 @@ public class SystraceService implements ISystraceService{
 	
 	/* RH. Fix me.
 	 * could avoid pass ITmfTrace? */
-	public void addTrace(URI fileUri, ITmfTrace tmfTrace) throws IOException{
+	public void addTrace(URI fileUri) throws IOException{
 		
 		/* RH. Fix me.
 		 * Should be in a separate thread*/
 		createPageTable(fileUri);
 		
-		createCacheTable(fileUri, tmfTrace);
+		createCacheTable(fileUri);
 		
 		traceList.add(fileUri);
 	}
 	
+	
+    
 	public TreeBasedTable<Integer, Long, Long> getPageTable(URI fileUri){
 		
 		return pageTables.get(fileUri);
@@ -132,7 +138,7 @@ public class SystraceService implements ISystraceService{
 		return rankTables.get(fileUri);
 	}
 	
-	private void createCacheTable(URI fileUri, ITmfTrace tmfTrace) throws FileNotFoundException{
+	private void createCacheTable(URI fileUri) throws FileNotFoundException{
 		
 		FileInputStream fis = new FileInputStream(fileUri.getPath());
 		
@@ -140,7 +146,7 @@ public class SystraceService implements ISystraceService{
 		
 		TraceCache cache = new TraceCache();
 		
-		cache.init(fileChannel, pageTables.get(fileUri), rankTables.get(fileUri), tmfTrace);
+		cache.init(fileChannel, pageTables.get(fileUri), rankTables.get(fileUri));
 		
 		cacheTables.put(fileUri, cache);
 		
@@ -300,10 +306,11 @@ public class SystraceService implements ISystraceService{
 				#           TASK-PID    CPU#    TIMESTAMP  FUNCTION\n\
 				#              | |       |          |         |\n\
 			 */
-			positionStart += line.getBytes().length + 1;
+			positionStart += line.getBytes().length + 1; // +1 cause "\" character
 		}
 		
-		return positionStart;
+		/* +1 to return to next line start */
+		return positionStart + 1;
 	}
 }
  
