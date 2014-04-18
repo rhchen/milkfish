@@ -38,9 +38,19 @@ import org.osgi.framework.FrameworkUtil;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.TreeBasedTable;
 
+/*
+ * To make the unit test run correct under surefire
+ * 
+ * Must add net.sf.milkfish.product to dependent
+ * 
+ * And set the fragment plugin to be activated when class loaded, check box checked
+ * 
+ * The mocked event borker is optional, if used, must annotated with Creatable
+ * 
+ */
 public class TestAndroidTrace {
 
-private static IEclipseContext _context;
+	private static IEclipseContext _context;
 	
 	private static ISystraceService _systraceService;
 	
@@ -53,13 +63,15 @@ private static IEclipseContext _context;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
-		_context = EclipseContextFactory.create();
-	   
-		InjectorFactory.getDefault().addBinding(IEventBroker.class).implementedBy(EventBrokerMock.class);
+//		_context = EclipseContextFactory.create();
+	    
+		_context = Activator.getDefault().getEclipseContext();
 		
-		InjectorFactory.getDefault().addBinding(TracePipe.class).implementedBy(TracePipe.class);
-		
-		InjectorFactory.getDefault().addBinding(ISystraceService.class).implementedBy(SystraceService.class);
+//		InjectorFactory.getDefault().addBinding(IEventBroker.class).implementedBy(EventBrokerMock.class);
+//		
+//		InjectorFactory.getDefault().addBinding(TracePipe.class).implementedBy(TracePipe.class);
+//		
+//		InjectorFactory.getDefault().addBinding(ISystraceService.class).implementedBy(SystraceService.class);
 	   
 		_systraceService = ContextInjectionFactory.make(ISystraceService.class, _context);
 		
@@ -68,7 +80,7 @@ private static IEclipseContext _context;
 		//ContextInjectionFactory.make(IEventBroker.class, _context);
 		
 		
-		_androidTrace = ContextInjectionFactory.make(AndroidTrace.class, _context);
+//		_androidTrace = ContextInjectionFactory.make(AndroidTrace.class, _context);
 	}
 
 	@AfterClass

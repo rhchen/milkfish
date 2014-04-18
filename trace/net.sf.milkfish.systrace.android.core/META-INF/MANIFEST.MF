@@ -18,3 +18,4 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
 Export-Package: net.sf.milkfish.systrace.android.core
 Import-Package: javax.annotation;version="1.1.0"
 Bundle-Activator: net.sf.milkfish.systrace.android.core.Activator
+Bundle-ActivationPolicy: lazy

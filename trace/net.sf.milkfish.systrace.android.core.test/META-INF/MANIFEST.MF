@@ -11,4 +11,5 @@ Require-Bundle: org.junit,
  org.eclipse.osgi.services;bundle-version="3.3.100",
  org.eclipse.e4.ui.di;bundle-version="1.0.0",
  org.eclipse.linuxtools.tmf.core,
- com.google.guava
+ com.google.guava,
+ net.sf.milkfish.product;bundle-version="1.0.0"
