@@ -1,9 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jackson Annotations
-Bundle-SymbolicName: com.fasterxml.jackson.annotations
+Bundle-SymbolicName: com.fasterxml.jackson.annotations;singleton:=true
 Bundle-Version: 2.3.2
 Bundle-ClassPath: jackson-annotations-2.3.2.jar
 Export-Package: com.fasterxml.jackson.annotation;version="2.3.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: com.fasterxml.jackson.core;bundle-version="2.3.2"
+Bundle-ActivationPolicy: lazy

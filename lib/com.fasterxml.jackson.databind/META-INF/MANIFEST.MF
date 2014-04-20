@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jackson Databind
-Bundle-SymbolicName: com.fasterxml.jackson.databind
+Bundle-SymbolicName: com.fasterxml.jackson.databind;singleton:=true
 Bundle-Version: 2.3.2
 Bundle-ClassPath: jackson-databind-2.3.2.jar
 Export-Package: com.fasterxml.jackson.databind,
@@ -27,3 +27,4 @@ Export-Package: com.fasterxml.jackson.databind,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: com.fasterxml.jackson.core;bundle-version="2.3.2",
  com.fasterxml.jackson.annotations;bundle-version="2.3.2"
+Bundle-ActivationPolicy: lazy

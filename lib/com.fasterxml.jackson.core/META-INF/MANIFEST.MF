@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jackson Core
-Bundle-SymbolicName: com.fasterxml.jackson.core
+Bundle-SymbolicName: com.fasterxml.jackson.core;singleton:=true
 Bundle-Version: 2.3.2
 Bundle-ClassPath: jackson-core-2.3.2.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -13,3 +13,4 @@ Export-Package: com.fasterxml.jackson.core,
  com.fasterxml.jackson.core.sym,
  com.fasterxml.jackson.core.type,
  com.fasterxml.jackson.core.util
+Bundle-ActivationPolicy: lazy
