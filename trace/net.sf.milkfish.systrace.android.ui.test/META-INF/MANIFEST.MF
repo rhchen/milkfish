@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: net.sf.milkfish.systrace.android.ui.test
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: net.sf.milkfish.systrace.android.ui;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit,
+ net.sf.milkfish.product;bundle-version="1.0.0",
+ org.eclipse.linuxtools.tmf.ui,
+ org.eclipse.linuxtools.tmf.core,
+ net.sf.milkfish.systrace.android.core
