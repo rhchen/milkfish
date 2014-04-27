@@ -42,11 +42,16 @@ import org.junit.Test;
 
 /**
  * Start with plugin test
- * 1. Not run in UI thread
- * 2. Setup Product
- * 3. Setup open file parametor
+ * 1. Assign Product definition
  * 
  * Reference ProjectModelTestData to switch thread
+ * 
+ * The plugin not in MVN build process, due to the open trace operation requires run in main thread
+ * If enabled <useUIThread>false</useUIThread> in surefire, it lead to SWTbot fail
+ * As know inject now works in unit test, users has to manual inject class
+ * For E4 service, it now work by manual injection
+ * 
+ * In junit plugin test, it works
  * 
  */
 public class TestStateSystem {
