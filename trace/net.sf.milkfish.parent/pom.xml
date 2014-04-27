@@ -51,6 +51,27 @@
             <product>net.sf.milkfish.product.product</product>
             <application>net.sf.milkfish.product.application</application>
             <appArgLine>-consolelog -clearPersistedState</appArgLine>
+            <!-- Start level setting, not sure should be disable -->
+            <bundleStartLevel>
+				 <bundle>
+						<id>org.eclipse.core.runtime</id>
+						<level>4</level>
+						<autoStart>true</autoStart>
+				 </bundle>
+				 <bundle>
+						<id>org.eclipse.equinox.common</id>
+						<level>2</level>
+						<autoStart>true</autoStart>
+				 </bundle>
+				 <bundle>
+						<id>org.eclipse.equinox.ds</id>
+						<level>2</level>
+						<autoStart>true</autoStart>
+				 </bundle>
+			</bundleStartLevel>
+			<!-- enable debug, use remote java application to ATTACH
+			<debugPort>5005</debugPort>
+			-->
           </configuration>
       </plugin>
     </plugins>
