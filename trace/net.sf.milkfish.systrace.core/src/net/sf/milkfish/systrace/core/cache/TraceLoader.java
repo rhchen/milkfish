@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 import net.sf.commonstringutil.StringUtil;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
+import net.sf.milkfish.systrace.core.service.impl.SystraceService;
 import net.sf.milkfish.systrace.core.state.SystraceStrings;
 
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
@@ -99,12 +100,9 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 			
 			//boolean isFind = pt_sched_switch.matcher(line).find();
 			
-			/* Ignore space line */
-			if(StringUtil.ltrim(line) == null) continue;
+			boolean isFind = SystraceService.isLineMatch(line);
 			
-			boolean isFind = StringUtil.startsWithIgnoreCase(line, "#");
-			
-			if(!isFind){
+			if(isFind){
 				
 				this._currentRank ++;
 				

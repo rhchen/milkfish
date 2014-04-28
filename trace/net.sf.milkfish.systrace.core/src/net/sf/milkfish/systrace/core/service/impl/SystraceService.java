@@ -234,11 +234,7 @@ public class SystraceService implements ISystraceService{
 				
 				lastLine = line;
 				
-				/* Ignore space line */
-				if(StringUtil.ltrim(line) == null) continue;
-					
-				/* Rank increase on # not appears */
-				rank = StringUtil.startsWithIgnoreCase(line, "#") == true ? rank : rank+1;
+				rank = isLineMatch(line) == true ? rank+1 : rank;
 				
 			}//for
 			
@@ -260,6 +256,18 @@ public class SystraceService implements ISystraceService{
 		fis.close();
 	}
 	
+	public static boolean isLineMatch(String line){
+		
+		/* ignore empty string */
+		if(line.length() == 0) return false;
+		
+		/* Ignore space line */
+		if(StringUtil.ltrim(line).length() == 0) return false;
+		
+		boolean isFind = StringUtil.startsWithIgnoreCase(line, "#");
+		
+		return !isFind;
+	} 
 	/**
 	 * 
 	 * Skips number of lines to reduce dummy check
