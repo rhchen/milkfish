@@ -17,7 +17,14 @@
             class="net.sf.milkfish.systrace.android.ui.views.ControlFlowViewWrapper"
             icon="icons/sample_decorator.gif"
             id="net.sf.milkfish.systrace.android.ui.views.controlflow.ControlFlowView"
-            name="controlflow"
+            name="Controlflow"
+            restorable="true">
+      </view>
+      <view
+            class="net.sf.milkfish.systrace.android.ui.views.ResourceViewWrapper"
+            icon="icons/sample_decorator.gif"
+            id="net.sf.milkfish.systrace.android.ui.views.resources.ResourcesView"
+            name="Resource"
             restorable="true">
       </view>
    </extension>

@@ -8,9 +8,10 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 
 import net.sf.milkfish.systrace.android.ui.views.controlflow.ControlFlowView;
+import net.sf.milkfish.systrace.android.ui.views.resources.ResourcesView;
 import net.sf.milkfish.systrace.core.service.ISystraceService;
 
-public class ControlFlowViewWrapper extends ControlFlowView {
+public class ResourceViewWrapper extends ResourcesView {
 
 	
 	private IEclipseContext _context;
@@ -35,7 +36,7 @@ public class ControlFlowViewWrapper extends ControlFlowView {
        
        int echo = systraceService.echo();
        
-       System.out.println("ControlFlowViewWrapper.init "+ echo);
+       System.out.println("ResourceViewWrapper.init "+ echo);
     }
 
 	@Override

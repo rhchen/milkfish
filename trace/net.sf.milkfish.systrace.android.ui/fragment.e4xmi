@@ -4,6 +4,9 @@
     <elements xsi:type="basic:Part" xmi:id="_paJ0sLHTEeOVB5SFO0Ntlw" elementId="net.sf.milkfish.systrace.android.ui.views.controlflow.ControlFlowView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Controlflow" iconURI="platform:/plugin/net.sf.milkfish.systrace.android.ui/icons/sample_decorator.gif" closeable="true">
       <toolbar xmi:id="_vN24sLHTEeOVB5SFO0Ntlw" elementId="net.sf.milkfish.systrace.android.ui.toolbar.1"/>
     </elements>
+    <elements xsi:type="basic:Part" xmi:id="_JwaG8M73EeOtNZ9ATTuxCg" elementId="net.sf.milkfish.systrace.android.ui.views.resources.ResourcesView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Resource" iconURI="platform:/plugin/net.sf.milkfish.systrace.android.ui/icons/sample_decorator.gif" closeable="true">
+      <toolbar xmi:id="_QTs00M73EeOtNZ9ATTuxCg" elementId="net.sf.milkfish.systrace.android.ui.toolbar.0"/>
+    </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_4sqv0LNwEeOCPcoJwJYMXA" featurename="addons" parentElementId="org.eclipse.e4.ide.application">
     <elements xsi:type="application:Addon" xmi:id="_7LlCQLNwEeOCPcoJwJYMXA" elementId="net.sf.milkfish.systrace.android.ui.addon" contributionURI="bundleclass://net.sf.milkfish.systrace.android.ui/net.sf.milkfish.systrace.android.ui.ModelAddon"/>
