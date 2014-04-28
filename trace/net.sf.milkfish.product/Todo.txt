@@ -1,6 +1,8 @@
+# 2014.04.29
+1. The last line contain dummy-0000 timestamp 00000.0000 record should be ignored
+   Currently seems ok, but need check
 
 # 2014.04.28
 1. StateSystem explorer fail on editor > control view > show view > state system explorer
    Due to getActiveEditor fail, Due to the control flow view use primary data stack
-2. The last line of events dummy timestamp 00000.0000 is a problem
-   It lead to the control flow view set start time incorrect
+   Workaround is to put the controlflow view to bottom
