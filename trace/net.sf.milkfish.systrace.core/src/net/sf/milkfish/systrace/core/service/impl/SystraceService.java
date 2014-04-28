@@ -312,7 +312,8 @@ public class SystraceService implements ISystraceService{
 			positionStart += line.getBytes().length + 1; // +1 cause "\" character
 		}
 		
-		return positionStart;
+		/* +1 to return to next line start */
+		return positionStart + 1;
 	}
 }
  

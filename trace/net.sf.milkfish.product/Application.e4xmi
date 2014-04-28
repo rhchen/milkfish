@@ -6,20 +6,20 @@
         <children xsi:type="basic:PartSashContainer" xmi:id="_qUGd5pvBEeOju7PEXqMTcg" elementId="" containerData="10000">
           <children xsi:type="basic:PartSashContainer" xmi:id="_bkf58J7vEeOsYpGGoUrbcw" elementId="" containerData="7000" horizontal="true">
             <children xsi:type="basic:PartSashContainer" xmi:id="_y-gGQJ7vEeOsYpGGoUrbcw" elementId="" containerData="2000">
-              <children xsi:type="basic:PartStack" xmi:id="_qUHE4JvBEeOju7PEXqMTcg" containerData="3000">
+              <children xsi:type="basic:PartStack" xmi:id="_qUHE4JvBEeOju7PEXqMTcg" elementId="net.sf.milkfish.partstack.left.top" containerData="3000">
                 <children xsi:type="basic:Part" xmi:id="_qUHE4ZvBEeOju7PEXqMTcg" contributionURI="bundleclass://net.sf.milkfish.product/net.sf.milkfish.product.parts.SamplePart" label="Sample Part"/>
               </children>
-              <children xsi:type="basic:PartStack" xmi:id="_KsuPEJ7wEeOsYpGGoUrbcw" elementId="" containerData="7000">
+              <children xsi:type="basic:PartStack" xmi:id="_KsuPEJ7wEeOsYpGGoUrbcw" elementId="net.sf.milkfish.partstack.left.bottom" containerData="7000">
                 <children xsi:type="advanced:Placeholder" xmi:id="_jddk0J7wEeOsYpGGoUrbcw" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_8abDkJ7uEeOsYpGGoUrbcw" closeable="true"/>
               </children>
             </children>
             <children xsi:type="advanced:Placeholder" xmi:id="_KSgeoJ74EeOsYpGGoUrbcw" elementId="org.eclipse.ui.editorss" containerData="8000" ref="_Ap_bUJ7vEeOsYpGGoUrbcw" closeable="true"/>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_dEcpwJ7vEeOsYpGGoUrbcw" elementId="" containerData="3000" horizontal="true">
-            <children xsi:type="basic:PartStack" xmi:id="_us1AQJ7wEeOsYpGGoUrbcw" elementId="">
+            <children xsi:type="basic:PartStack" xmi:id="_us1AQJ7wEeOsYpGGoUrbcw" elementId="net.sf.milkfish.partstack.bottom.left">
               <children xsi:type="advanced:Placeholder" xmi:id="_0aFeAJ7wEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.PropertySheet" ref="_esCIEJ7uEeOsYpGGoUrbcw" closeable="true"/>
             </children>
-            <children xsi:type="basic:PartStack" xmi:id="_vPmWIJ7wEeOsYpGGoUrbcw" elementId="">
+            <children xsi:type="basic:PartStack" xmi:id="_vPmWIJ7wEeOsYpGGoUrbcw" elementId="net.sf.milkfish.partstack.bottom.right">
               <children xsi:type="advanced:Placeholder" xmi:id="_3-nUsJ7wEeOsYpGGoUrbcw" elementId="org.eclipse.ui.console.ConsoleView" ref="_znGz0J7uEeOsYpGGoUrbcw" closeable="true"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_B6CcAJ7xEeOsYpGGoUrbcw" elementId="org.eclipse.ui.views.ProgressView" ref="_pCu2IJ7uEeOsYpGGoUrbcw" closeable="true"/>
             </children>

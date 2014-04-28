@@ -3,6 +3,7 @@ package net.sf.milkfish.systrace.android.ui.test;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.List;
 
 import net.sf.milkfish.systrace.android.core.AndroidTrace;
 
@@ -21,6 +22,9 @@ import org.eclipse.linuxtools.internal.tmf.ui.Activator;
 import org.eclipse.linuxtools.internal.tmf.ui.project.model.TmfImportHelper;
 import org.eclipse.linuxtools.internal.tmf.ui.project.model.TmfTraceImportException;
 import org.eclipse.linuxtools.tmf.core.TmfCommonConstants;
+import org.eclipse.linuxtools.tmf.core.exceptions.StateSystemDisposedException;
+import org.eclipse.linuxtools.tmf.core.exceptions.TimeRangeException;
+import org.eclipse.linuxtools.tmf.core.interval.ITmfStateInterval;
 import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateSystem;
 import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 import org.eclipse.linuxtools.tmf.ui.project.model.Messages;
@@ -79,7 +83,7 @@ public class TestStateSystem {
 	}
 
 	@Test
-	public final void test() throws CoreException, InterruptedException {
+	public final void test() throws CoreException, InterruptedException, TimeRangeException, StateSystemDisposedException {
 		
 		Assert.assertNotNull(new Object());
 		
@@ -115,8 +119,6 @@ public class TestStateSystem {
 		
 		ITmfStateSystem ss = aTrace.getStateSystems().get(AndroidTrace.STATE_ID);
 		
-		
-		
 		assert ss != null;
 		
 		ss.waitUntilBuilt();
@@ -125,9 +127,11 @@ public class TestStateSystem {
 		
 		System.out.println("TestStateSystem.test "+ nb);
 		
+		long ts = ss.getStartTime();
 		
+		List<ITmfStateInterval> ll = ss.queryFullState(ts);
 		
-		
+		System.out.println("TestStateSystem.test queryFullState "+ ll.size());
 	}
 
 	public IStatus openTraceFromPath(String projectRoot, String path, String traceName, TraceTypeHelper traceTypeToSet) throws CoreException {

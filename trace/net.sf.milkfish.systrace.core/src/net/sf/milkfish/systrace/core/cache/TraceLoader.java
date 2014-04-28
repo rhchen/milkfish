@@ -124,12 +124,10 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 				}else{
 					
-					if(line.length() == 2){
-						System.out.println();
-					}
 					ITmfEvent event = handleUndefinedEvent(line);
 					
 					dataMap.put(this._currentRank, event);
+					
 				}
 				
 			}else{
@@ -197,7 +195,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		fields[0] = tmfEventField;
 		
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
-		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(title, title, null), content, suffStr, cpuId, title);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(title, title, null), content, line, cpuId, title);
 		
 		return event;
 	}
