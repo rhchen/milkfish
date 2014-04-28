@@ -120,6 +120,18 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					dataMap.put(this._currentRank, event);
 					
+				}else if(StringUtil.countText(line, "trace_event_clock_sync") > 0){
+					
+					/* 
+					 * The dummy event is the last event of the trace
+					 * The type is trace_event_clock_sync, just ignore it, ex
+					 * 
+					 * 	dummy-0000  [000] 0.0: 0: trace_event_clock_sync: parent_ts=0.0\n";
+					 * 
+					 * When trace iterate to this, return null to lead to escape the trace parse
+					 * Here we do nothing
+					 */
+					
 				}else{
 					
 					ITmfEvent event = handleUndefinedEvent(line);
