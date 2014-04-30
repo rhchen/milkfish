@@ -217,14 +217,17 @@ public class SystraceService implements ISystraceService{
 			
 			long limit = (i+1) * M_BYTE > fileChannel.size() ? fileChannel.size() : (i+1) * M_BYTE;
 			
-			long bufferSize = limit - (i * M_BYTE);
+			//long bufferSize = limit - (i * M_BYTE);
+			long bufferSize = limit - positionStart;
 			
-			MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, i * M_BYTE, bufferSize);
+			//MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, i * M_BYTE, bufferSize);
+			MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, positionStart, bufferSize);
 
 			byte[] buffer = new byte[(int) bufferSize];
 			
 			mmb.get(buffer);
 			
+			//BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
 			BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
 			
 			/* Do a guess to skip the first 3 lines */

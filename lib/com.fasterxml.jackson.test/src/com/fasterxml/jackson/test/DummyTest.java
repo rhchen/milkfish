@@ -163,4 +163,30 @@ public class DummyTest {
         
 	}
 	
+	@Test
+	public final void test_3() {
+		
+		try {
+			
+			Document doc = Jsoup.parse(new File("data/falcon_pro_trace.html"), "UTF-8");
+	        
+	        Elements links = doc.select("script");
+			for (Element link : links) {
+	 
+				// get the value from href attribute
+				//System.out.println("text : " + link.data());
+				PrintWriter out = new PrintWriter("data/falcon_pro_trace.txt");
+				out.println(link.data());
+				out.close();
+			}
+	        
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+	}
+	
 }
