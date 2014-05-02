@@ -477,6 +477,18 @@ public class SystraceStateProvider extends AbstractTmfStateProvider {
              * type integer. Which, once again, should never happen.
              */
             sve.printStackTrace();
+        
+        } catch (Exception e){
+        	
+        	/*
+        	 * Enable this to check if event parsed but insert to state system fail
+        	 */
+        	e.printStackTrace();
+        	
+        	if(event != null){
+        		
+        		System.out.println("event : "+ event.getReference());
+        	}
         }
     }
 
