@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="milkfish-e4.3" sequenceNumber="25">
+<?pde version="3.8"?><target name="milkfish-e4.3" sequenceNumber="30">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.apache.commons.collections" version="3.2.0.v2013030210310"/>
@@ -33,11 +33,15 @@
 <unit id="com.google.guava" version="12.0.0.v201212092141"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130517111416/repository/"/>
 </location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.apache.commons.net" version="3.2.0.v201305141515"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130517111416/repository/"/>
+</location>
 </locations>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 <launcherArgs>
-<vmArgs>-Xms40m
--Xmx512M
+<vmArgs>-Xms40m&#13;
+-Xmx512M&#13;
 -XX:MaxPermSize=256m</vmArgs>
 <programArgs>-consolelog</programArgs>
 </launcherArgs>

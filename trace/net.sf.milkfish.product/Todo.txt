@@ -1,3 +1,12 @@
+# 20140502
+1. The skipLines in SystraceService workarrounded
+   The CRLF handle should be review
+2. ByteArrayPool.java and LineInput consider removed
+3. CRLFLineReader in SystraceService depends apach common net
+4. The target definition add common.net should be removed
+5. The last line of falcon_pro_trace.txt is dummy, it lead to event type of undefine and timestamp is 000
+   Need fix
+
 # 2014.04.29
 1. The last line contain dummy-0000 timestamp 00000.0000 record should be ignored
    Currently seems ok, but need check

@@ -88,7 +88,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		mmb.get(buffer);
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
-
+		
 		String line;
 		
 		/* Another way is to use regular expression, but seems slower
@@ -147,6 +147,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 			
 		}//for
 		
+		in.close();
 		
 		return builder.putAll(dataMap).build();
 	}

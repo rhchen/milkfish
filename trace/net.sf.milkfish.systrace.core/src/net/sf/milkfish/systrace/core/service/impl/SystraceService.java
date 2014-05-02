@@ -227,8 +227,9 @@ public class SystraceService implements ISystraceService{
 			
 			mmb.get(buffer);
 			
-			//BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
 			BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
+			//CRLFLineReader in = new CRLFLineReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
+			//LineInput in = new LineInput(new ByteArrayInputStream(buffer));
 			
 			/* Do a guess to skip the first 3 lines */
 			positionStart = i == 0 ? skipLines(in, 3) : positionStart;
@@ -240,6 +241,8 @@ public class SystraceService implements ISystraceService{
 				rank = isLineMatch(line) == true ? rank+1 : rank;
 				
 			}//for
+			
+			in.close();
 			
 			positionEnd = i == pages ? limit : limit - lastLine.getBytes().length;
 			
@@ -306,6 +309,17 @@ public class SystraceService implements ISystraceService{
 		
 		long positionStart = 0;
 		
+		/*
+		 * RH. Fix me
+		 * CR = 13, LF = 10
+		 * On window is CRLF
+		 * On Linux is LF
+		 * 
+		 * When first byte is CR, the log is in window format
+		 * There is assum the first line is empty string, should be reviewd
+		 */
+		int add = 13 == in.read()? 2 : 1;
+		
 		for(int i=0; i<linesToSkip; i++){
 			
 			String line = in.readLine();
@@ -320,11 +334,11 @@ public class SystraceService implements ISystraceService{
 				#           TASK-PID    CPU#    TIMESTAMP  FUNCTION\n\
 				#              | |       |          |         |\n\
 			 */
-			positionStart += line.getBytes().length + 1; // +1 cause "\" character
+			positionStart += line.getBytes().length + add; // +1 cause "\" character
 		}
 		
 		/* +1 to return to next line start */
-		return positionStart + 1;
+		return positionStart;
 	}
 }
  
