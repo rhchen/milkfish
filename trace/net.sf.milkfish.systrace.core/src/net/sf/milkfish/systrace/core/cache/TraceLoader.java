@@ -143,6 +143,23 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					continue;
 					
+				}else if(StringUtil.countText(line, "sched_process_fork") > 0){
+					
+					ITmfEvent event = handleSchedleProcessForkEvent(line);
+					
+					dataMap.put(this._currentRank, event);
+					
+					continue;
+					
+				}else if(StringUtil.countText(line, "sched_process_exit") > 0 ||
+						 StringUtil.countText(line, "sched_process_free") > 0){
+					
+					ITmfEvent event = handleSchedleProcessFreeEvent(line);
+					
+					dataMap.put(this._currentRank, event);
+					
+					continue;
+					
 				}else if(StringUtil.countText(line, "trace_event_clock_sync") > 0){
 					
 					/* 
@@ -242,6 +259,93 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		return new Head(cpuId, timeStamp, title, suffStr);
 	}
 	
+	private final ITmfEvent handleSchedleProcessFreeEvent(String line){
+		
+		Head head = parseHead(line);
+
+		String suffStr = head.suffStr;
+		suffStr = StringUtil.replace(suffStr, "comm" , "||");
+		suffStr = StringUtil.replace(suffStr, "pid"  , "||");
+		suffStr = StringUtil.replace(suffStr, "prio"  , "||");
+		
+		@SuppressWarnings("unchecked")
+		List<String> rlist = StringUtil.splitAsList(suffStr, "||=");
+		
+		TmfTimestamp ts = new TmfTimestamp(head.timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
+		Random rnd = new Random();
+		long payload = Long.valueOf(rnd.nextInt(10));
+		
+		/* Put the value in a field
+		 * The field is required by SystraceStateProvider.eventHandle()*/
+		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		
+		/* The comm is optional, could be safe removed */
+		final TmfEventField tmfEventField_COMM = new TmfEventField(SystraceStrings.COMM, rlist.get(1).trim(), null); //$NON-NLS-1$
+		
+		final TmfEventField tmfEventField_TID = new TmfEventField(SystraceStrings.TID, Long.parseLong(rlist.get(2).trim()), null); //$NON-NLS-1$
+		
+		/* The prio is optional, could be safe removed */
+		final TmfEventField tmfEventField_PRIO = new TmfEventField(SystraceStrings.PRIO, Long.parseLong(rlist.get(3).trim()), null); //$NON-NLS-1$
+		
+		// the field must be in an array
+		final TmfEventField[] fields = new TmfEventField[4];
+		fields[0] = tmfEventField;
+		fields[1] = tmfEventField_COMM;
+		fields[2] = tmfEventField_TID;
+		fields[3] = tmfEventField_PRIO;
+		
+		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		
+		return event;
+	}
+	
+	private final ITmfEvent handleSchedleProcessForkEvent(String line){
+		
+		Head head = parseHead(line);
+
+		String suffStr = head.suffStr;
+		
+		/* The order of replacement is tricky */
+		suffStr = StringUtil.replace(suffStr, "child_comm"  , "||");
+		suffStr = StringUtil.replace(suffStr, "child_pid"  , "||");
+		suffStr = StringUtil.replace(suffStr, "comm" , "||");
+		suffStr = StringUtil.replace(suffStr, "pid"  , "||");
+		
+		@SuppressWarnings("unchecked")
+		List<String> rlist = StringUtil.splitAsList(suffStr, "||=");
+		
+		TmfTimestamp ts = new TmfTimestamp(head.timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
+		Random rnd = new Random();
+		long payload = Long.valueOf(rnd.nextInt(10));
+		
+		/* Put the value in a field
+		 * The field is required by SystraceStateProvider.eventHandle()*/
+		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		
+		/* The comm is optional, could be safe removed */
+		final TmfEventField tmfEventField_COMM = new TmfEventField(SystraceStrings.COMM, rlist.get(1).trim(), null); //$NON-NLS-1$
+		
+		final TmfEventField tmfEventField_PARENT_TID = new TmfEventField(SystraceStrings.PARENT_TID, Long.parseLong(rlist.get(2).trim()), null); //$NON-NLS-1$
+		
+		final TmfEventField tmfEventField_CHILD_COMM = new TmfEventField(SystraceStrings.CHILD_COMM, rlist.get(3).trim(), null); //$NON-NLS-1$
+		
+		final TmfEventField tmfEventField_CHILD_TID = new TmfEventField(SystraceStrings.CHILD_TID, Long.parseLong(rlist.get(4).trim()), null); //$NON-NLS-1$
+		
+		// the field must be in an array
+		final TmfEventField[] fields = new TmfEventField[5];
+		fields[0] = tmfEventField;
+		fields[1] = tmfEventField_COMM;
+		fields[2] = tmfEventField_PARENT_TID;
+		fields[3] = tmfEventField_CHILD_COMM;
+		fields[4] = tmfEventField_CHILD_TID;
+		
+		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		
+		return event;
+	}
+
 	private final ITmfEvent handleIrqEvent(String line){
 		
 		Head head = parseHead(line);

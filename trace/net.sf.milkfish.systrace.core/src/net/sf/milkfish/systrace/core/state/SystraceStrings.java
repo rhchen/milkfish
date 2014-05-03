@@ -26,15 +26,15 @@ package net.sf.milkfish.systrace.core.state;
 public interface SystraceStrings {
 
     /* Event names */
-    static final String EXIT_SYSCALL = "exit_syscall";
+    static final String EXIT_SYSCALL      = "exit_syscall";
     static final String IRQ_HANDLER_ENTRY = "irq_handler_entry";
-    static final String IRQ_HANDLER_EXIT = "irq_handler_exit";
+    static final String IRQ_HANDLER_EXIT  = "irq_handler_exit";
     static final String SOFTIRQ_ENTRY = "softirq_entry";
-    static final String SOFTIRQ_EXIT = "softirq_exit";
+    static final String SOFTIRQ_EXIT  = "softirq_exit";
     static final String SOFTIRQ_RAISE = "softirq_raise";
-    static final String SCHED_SWITCH = "sched_switch";
-    static final String SCHED_WAKEUP = "sched_wakeup";
-    static final String SCHED_WAKEUP_NEW = "sched_wakeup_new";
+    static final String SCHED_SWITCH  = "sched_switch";
+    static final String SCHED_WAKEUP  = "sched_wakeup";
+    static final String SCHED_WAKEUP_NEW   = "sched_wakeup_new";
     static final String SCHED_PROCESS_FORK = "sched_process_fork";
     static final String SCHED_PROCESS_EXIT = "sched_process_exit";
     static final String SCHED_PROCESS_FREE = "sched_process_free";
@@ -54,6 +54,7 @@ public interface SystraceStrings {
     static final String PPID     = "ppid";
     static final String STATUS   = "status";
     static final String VEC      = "vec";
+    static final String PRIO     = "prio";
     static final String ACTION     = "action";
     static final String PREV_COMM  = "prev_comm";
     static final String PREV_TID   = "prev_tid";
