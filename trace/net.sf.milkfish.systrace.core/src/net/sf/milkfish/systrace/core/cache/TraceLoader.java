@@ -31,6 +31,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.TreeBasedTable;
 
@@ -276,26 +277,28 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
+		final List<TmfEventField> eventList = Lists.<TmfEventField>newArrayList();
+		
 		/* Put the value in a field
 		 * The field is required by SystraceStateProvider.eventHandle()*/
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		eventList.add(tmfEventField);
 		
 		/* The comm is optional, could be safe removed */
 		final TmfEventField tmfEventField_COMM = new TmfEventField(SystraceStrings.COMM, rlist.get(1).trim(), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_COMM);
 		
 		final TmfEventField tmfEventField_TID = new TmfEventField(SystraceStrings.TID, Long.parseLong(rlist.get(2).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_TID);
 		
 		/* The prio is optional, could be safe removed */
 		final TmfEventField tmfEventField_PRIO = new TmfEventField(SystraceStrings.PRIO, Long.parseLong(rlist.get(3).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_PRIO);
 		
-		// the field must be in an array
-		final TmfEventField[] fields = new TmfEventField[4];
-		fields[0] = tmfEventField;
-		fields[1] = tmfEventField_COMM;
-		fields[2] = tmfEventField_TID;
-		fields[3] = tmfEventField_PRIO;
+		/* the field must be in an array */
+		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);		
+		final TmfEventField  content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 		
-		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
@@ -320,28 +323,29 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
+		final List<TmfEventField> eventList = Lists.<TmfEventField>newArrayList();
+		
 		/* Put the value in a field
 		 * The field is required by SystraceStateProvider.eventHandle()*/
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		eventList.add(tmfEventField);
 		
 		/* The comm is optional, could be safe removed */
 		final TmfEventField tmfEventField_COMM = new TmfEventField(SystraceStrings.COMM, rlist.get(1).trim(), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_COMM);
 		
 		final TmfEventField tmfEventField_PARENT_TID = new TmfEventField(SystraceStrings.PARENT_TID, Long.parseLong(rlist.get(2).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_PARENT_TID);
 		
 		final TmfEventField tmfEventField_CHILD_COMM = new TmfEventField(SystraceStrings.CHILD_COMM, rlist.get(3).trim(), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_CHILD_COMM);
 		
 		final TmfEventField tmfEventField_CHILD_TID = new TmfEventField(SystraceStrings.CHILD_TID, Long.parseLong(rlist.get(4).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_CHILD_TID);
 		
-		// the field must be in an array
-		final TmfEventField[] fields = new TmfEventField[5];
-		fields[0] = tmfEventField;
-		fields[1] = tmfEventField_COMM;
-		fields[2] = tmfEventField_PARENT_TID;
-		fields[3] = tmfEventField_CHILD_COMM;
-		fields[4] = tmfEventField_CHILD_TID;
-		
+		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		
 		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
@@ -363,20 +367,23 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
+		final List<TmfEventField> eventList = Lists.<TmfEventField>newArrayList();
+		
 		/* Put the value in a field
 		 * The field is required by SystraceStateProvider.eventHandle()*/
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		eventList.add(tmfEventField);
+		
 		final TmfEventField tmfEventField_IRQ = new TmfEventField(SystraceStrings.IRQ, Long.parseLong(rlist.get(1).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_IRQ);
+		
 		/* The name is optional, could be safe removed */
 		final TmfEventField tmfEventField_NAME = new TmfEventField(SystraceStrings.IRQ_NAME, rlist.get(2).trim(), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_NAME);
 		
-		// the field must be in an array
-		final TmfEventField[] fields = new TmfEventField[3];
-		fields[0] = tmfEventField;
-		fields[1] = tmfEventField_IRQ;
-		fields[2] = tmfEventField_NAME;
-		
+		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		
 		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
@@ -399,20 +406,23 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
+		final List<TmfEventField> eventList = Lists.<TmfEventField>newArrayList();
+		
 		/* Put the value in a field
 		 * The field is required by SystraceStateProvider.eventHandle()*/
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		eventList.add(tmfEventField);
+		
 		final TmfEventField tmfEventField_VEC = new TmfEventField(SystraceStrings.VEC, Long.parseLong(rlist.get(1).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_VEC);
+		
 		/* The action field is optional, could be safe remove */
 		final TmfEventField tmfEventField_ACTION = new TmfEventField(SystraceStrings.ACTION, rlist.get(2).trim(), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_ACTION);
 		
-		// the field must be in an array
-		final TmfEventField[] fields = new TmfEventField[3];
-		fields[0] = tmfEventField;
-		fields[1] = tmfEventField_VEC;
-		fields[2] = tmfEventField_ACTION;
-		
+		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		
 		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
@@ -426,14 +436,15 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
+		final List<TmfEventField> eventList = Lists.<TmfEventField>newArrayList();
+		
 		// put the value in a field
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		eventList.add(tmfEventField);
 		
-		// the field must be in an array
-		final TmfEventField[] fields = new TmfEventField[1];
-		fields[0] = tmfEventField;
-		
+		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		
 		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, line, head.cpuId, head.title);
 		
 		return event;
@@ -457,17 +468,19 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
+		final List<TmfEventField> eventList = Lists.<TmfEventField>newArrayList();
+		
 		/* Put the value in a field
 		 * The field is required by SystraceStateProvider.eventHandle()*/
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		eventList.add(tmfEventField);
+		
 		final TmfEventField tmfEventField_TID = new TmfEventField(SystraceStrings.TID, Long.parseLong(rlist.get(2).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_TID);
 		
-		// the field must be in an array
-		final TmfEventField[] fields = new TmfEventField[2];
-		fields[0] = tmfEventField;
-		fields[1] = tmfEventField_TID;
-		
+		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		
 		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
@@ -494,22 +507,26 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 
+		final List<TmfEventField> eventList = Lists.<TmfEventField>newArrayList();
+		
 		/* Put the value in a field
 		 * The field is required by SystraceStateProvider.eventHandle()*/
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		eventList.add(tmfEventField);
+		
 		final TmfEventField tmfEventField_PREV_TID = new TmfEventField(SystraceStrings.PREV_TID, Long.parseLong(rlist.get(2).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_PREV_TID);
+		
 		final TmfEventField tmfEventField_PREV_STATE = new TmfEventField(SystraceStrings.PREV_STATE, payload, null); //$NON-NLS-1$
+		eventList.add(tmfEventField_PREV_STATE);
+		
 		final TmfEventField tmfEventField_NEXT_COMM = new TmfEventField(SystraceStrings.NEXT_COMM, rlist.get(5).trim(), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_NEXT_COMM);
+		
 		final TmfEventField tmfEventField_NEXT_TID = new TmfEventField(SystraceStrings.NEXT_TID, Long.parseLong(rlist.get(6).trim()), null); //$NON-NLS-1$
+		eventList.add(tmfEventField_NEXT_TID);
 		
-		// the field must be in an array
-		final TmfEventField[] fields = new TmfEventField[5];
-		fields[0] = tmfEventField;
-		fields[1] = tmfEventField_PREV_TID;
-		fields[2] = tmfEventField_PREV_STATE;
-		fields[3] = tmfEventField_NEXT_COMM;
-		fields[4] = tmfEventField_NEXT_TID;
-		
+		final TmfEventField[] fields = eventList.toArray(new TmfEventField[eventList.size()]);
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 
 		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
