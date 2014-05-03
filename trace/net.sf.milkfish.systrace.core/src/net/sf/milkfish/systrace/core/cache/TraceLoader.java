@@ -108,7 +108,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 				
 				/* RH. Fix me
 				 * Should have better way to do it */
-				if(StringUtil.countText(line, "sched_switch") > 0){
+				if(StringUtil.countText(line, SystraceStrings.SCHED_SWITCH) > 0){
 					
 					ITmfEvent event = handleSchedleSwitchEvent(line);
 					
@@ -116,7 +116,8 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					continue;
 					
-				}else if(StringUtil.countText(line, "sched_wakeup") > 0){
+				}else if(StringUtil.countText(line, SystraceStrings.SCHED_WAKEUP) > 0 ||
+						 StringUtil.countText(line, SystraceStrings.SCHED_WAKEUP_NEW) > 0){
 					
 					ITmfEvent event = handleSchedleWakeupEvent(line);
 					
@@ -124,9 +125,9 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					continue;
 					
-				}else if(StringUtil.countText(line, "softirq_raise") > 0 ||
-						 StringUtil.countText(line, "softirq_entry") > 0 ||
-						 StringUtil.countText(line, "softirq_exit") > 0){
+				}else if(StringUtil.countText(line, SystraceStrings.SOFTIRQ_RAISE) > 0 ||
+						 StringUtil.countText(line, SystraceStrings.SOFTIRQ_ENTRY) > 0 ||
+						 StringUtil.countText(line, SystraceStrings.SOFTIRQ_EXIT) > 0){
 					
 					ITmfEvent event = handleSoftIrqEvent(line);
 					
@@ -134,8 +135,8 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					continue;
 					
-				}else if(StringUtil.countText(line, "irq_handler_entry") > 0 ||
-				         StringUtil.countText(line, "irq_handler_exit") > 0){
+				}else if(StringUtil.countText(line, SystraceStrings.IRQ_HANDLER_ENTRY) > 0 ||
+				         StringUtil.countText(line, SystraceStrings.IRQ_HANDLER_EXIT) > 0){
 					
 					ITmfEvent event = handleIrqEvent(line);
 					
@@ -143,7 +144,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					continue;
 					
-				}else if(StringUtil.countText(line, "sched_process_fork") > 0){
+				}else if(StringUtil.countText(line, SystraceStrings.SCHED_PROCESS_FORK) > 0){
 					
 					ITmfEvent event = handleSchedleProcessForkEvent(line);
 					
@@ -151,8 +152,8 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					continue;
 					
-				}else if(StringUtil.countText(line, "sched_process_exit") > 0 ||
-						 StringUtil.countText(line, "sched_process_free") > 0){
+				}else if(StringUtil.countText(line, SystraceStrings.SCHED_PROCESS_EXIT) > 0 ||
+						 StringUtil.countText(line, SystraceStrings.SCHED_PROCESS_FREE) > 0){
 					
 					ITmfEvent event = handleSchedleProcessFreeEvent(line);
 					
