@@ -46,19 +46,21 @@ public interface SystraceStrings {
     static final String SYS_CLONE = "sys_clone";
 
     /* Field names */
-    static final String IRQ = "irq";
-    static final String COMM = "comm";
-    static final String NAME = "name";
-    static final String TID = "tid";
-    static final String PPID = "ppid";
-    static final String STATUS = "status";
-    static final String VEC = "vec";
-    static final String PREV_COMM = "prev_comm";
-    static final String PREV_TID = "prev_tid";
+    static final String IRQ      = "irq";
+    static final String IRQ_NAME = "irq_name";
+    static final String COMM     = "comm";
+    static final String NAME     = "name";
+    static final String TID      = "tid";
+    static final String PPID     = "ppid";
+    static final String STATUS   = "status";
+    static final String VEC      = "vec";
+    static final String ACTION     = "action";
+    static final String PREV_COMM  = "prev_comm";
+    static final String PREV_TID   = "prev_tid";
     static final String PREV_STATE = "prev_state";
-    static final String NEXT_COMM = "next_comm";
-    static final String NEXT_TID = "next_tid";
+    static final String NEXT_COMM  = "next_comm";
+    static final String NEXT_TID   = "next_tid";
     static final String PARENT_TID = "parent_tid";
     static final String CHILD_COMM = "child_comm";
-    static final String CHILD_TID = "child_tid";
+    static final String CHILD_TID  = "child_tid";
 }

@@ -114,11 +114,34 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					dataMap.put(this._currentRank, event);
 					
+					continue;
+					
 				}else if(StringUtil.countText(line, "sched_wakeup") > 0){
 					
 					ITmfEvent event = handleSchedleWakeupEvent(line);
 					
 					dataMap.put(this._currentRank, event);
+					
+					continue;
+					
+				}else if(StringUtil.countText(line, "softirq_raise") > 0 ||
+						 StringUtil.countText(line, "softirq_entry") > 0 ||
+						 StringUtil.countText(line, "softirq_exit") > 0){
+					
+					ITmfEvent event = handleSoftIrqEvent(line);
+					
+					dataMap.put(this._currentRank, event);
+					
+					continue;
+					
+				}else if(StringUtil.countText(line, "irq_handler_entry") > 0 ||
+				         StringUtil.countText(line, "irq_handler_exit") > 0){
+					
+					ITmfEvent event = handleIrqEvent(line);
+					
+					dataMap.put(this._currentRank, event);
+					
+					continue;
 					
 				}else if(StringUtil.countText(line, "trace_event_clock_sync") > 0){
 					
@@ -131,6 +154,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					 * When trace iterate to this, return null to lead to escape the trace parse
 					 * Here we do nothing
 					 */
+					continue;
 					
 				}else{
 					
@@ -138,6 +162,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 					
 					dataMap.put(this._currentRank, event);
 					
+					continue;
 				}
 				
 			}else{
@@ -215,6 +240,75 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		}//while
 		
 		return new Head(cpuId, timeStamp, title, suffStr);
+	}
+	
+	private final ITmfEvent handleIrqEvent(String line){
+		
+		Head head = parseHead(line);
+
+		String suffStr = head.suffStr;
+		suffStr = StringUtil.replace(suffStr, "irq" , "||");
+		suffStr = StringUtil.replace(suffStr, "name"  , "||");
+		suffStr = StringUtil.replace(suffStr, "ret"  , "||");
+		
+		@SuppressWarnings("unchecked")
+		List<String> rlist = StringUtil.splitAsList(suffStr, "||=");
+		
+		TmfTimestamp ts = new TmfTimestamp(head.timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
+		Random rnd = new Random();
+		long payload = Long.valueOf(rnd.nextInt(10));
+		
+		/* Put the value in a field
+		 * The field is required by SystraceStateProvider.eventHandle()*/
+		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		final TmfEventField tmfEventField_IRQ = new TmfEventField(SystraceStrings.IRQ, Long.parseLong(rlist.get(1).trim()), null); //$NON-NLS-1$
+		final TmfEventField tmfEventField_NAME = new TmfEventField(SystraceStrings.IRQ_NAME, rlist.get(2).trim(), null); //$NON-NLS-1$
+		
+		// the field must be in an array
+		final TmfEventField[] fields = new TmfEventField[3];
+		fields[0] = tmfEventField;
+		fields[1] = tmfEventField_IRQ;
+		fields[2] = tmfEventField_NAME;
+		
+		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		
+		return event;
+	}
+
+	private final ITmfEvent handleSoftIrqEvent(String line){
+		
+		Head head = parseHead(line);
+
+		String suffStr = head.suffStr;
+		suffStr = StringUtil.remove(suffStr, "[");
+		suffStr = StringUtil.remove(suffStr, "]");
+		suffStr = StringUtil.replace(suffStr, "vec" , "||");
+		suffStr = StringUtil.replace(suffStr, "action"  , "||");
+		
+		@SuppressWarnings("unchecked")
+		List<String> rlist = StringUtil.splitAsList(suffStr, "||=");
+		
+		TmfTimestamp ts = new TmfTimestamp(head.timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
+		Random rnd = new Random();
+		long payload = Long.valueOf(rnd.nextInt(10));
+		
+		/* Put the value in a field
+		 * The field is required by SystraceStateProvider.eventHandle()*/
+		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
+		final TmfEventField tmfEventField_VEC = new TmfEventField(SystraceStrings.VEC, Long.parseLong(rlist.get(1).trim()), null); //$NON-NLS-1$
+		final TmfEventField tmfEventField_ACTION = new TmfEventField(SystraceStrings.ACTION, rlist.get(2).trim(), null); //$NON-NLS-1$
+		
+		// the field must be in an array
+		final TmfEventField[] fields = new TmfEventField[3];
+		fields[0] = tmfEventField;
+		fields[1] = tmfEventField_VEC;
+		fields[2] = tmfEventField_ACTION;
+		
+		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
+		
+		return event;
 	}
 	
 	private final ITmfEvent handleUndefinedEvent(String line){
