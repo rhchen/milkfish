@@ -262,6 +262,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The field is required by SystraceStateProvider.eventHandle()*/
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
 		final TmfEventField tmfEventField_IRQ = new TmfEventField(SystraceStrings.IRQ, Long.parseLong(rlist.get(1).trim()), null); //$NON-NLS-1$
+		/* The name is optional, could be safe removed */
 		final TmfEventField tmfEventField_NAME = new TmfEventField(SystraceStrings.IRQ_NAME, rlist.get(2).trim(), null); //$NON-NLS-1$
 		
 		// the field must be in an array
@@ -297,6 +298,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		 * The field is required by SystraceStateProvider.eventHandle()*/
 		final TmfEventField tmfEventField = new TmfEventField("value", payload, null); //$NON-NLS-1$
 		final TmfEventField tmfEventField_VEC = new TmfEventField(SystraceStrings.VEC, Long.parseLong(rlist.get(1).trim()), null); //$NON-NLS-1$
+		/* The action field is optional, could be safe remove */
 		final TmfEventField tmfEventField_ACTION = new TmfEventField(SystraceStrings.ACTION, rlist.get(2).trim(), null); //$NON-NLS-1$
 		
 		// the field must be in an array
