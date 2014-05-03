@@ -152,7 +152,24 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		return builder.putAll(dataMap).build();
 	}
 	
-	private ITmfEvent handleUndefinedEvent(String line){
+	/* Inner class to store header of line */
+	private final class Head{
+	
+		public short cpuId    = 0;
+		public long timeStamp = 0L;
+		public String title   = "undefine";
+		public String suffStr = "undefine";
+		
+		public Head(final short cpuId, final long timeStamp, final String title, final String suffStr){
+			
+			this.cpuId     = cpuId;
+			this.timeStamp = timeStamp;
+			this.title     = title;
+			this.suffStr   = suffStr;
+		}
+	}
+	
+	private final Head parseHead(String line){
 		
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(line);
@@ -182,10 +199,13 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 				
 				/* Get Event Type Ex. sched_wakeup: */
 				sn = scan.next();
-				title = StringUtil.remove(sn, ":");
+				title = StringUtil.remove(sn, ":").trim().intern();
 			
 				/* Content of the event depends */
-				suffStr = scan.next();
+				@SuppressWarnings("unchecked")
+				List<String> list = StringUtil.splitAsList(line, sn);
+				
+				suffStr = list.get(1).trim();
 				
 				break;
 				
@@ -193,8 +213,15 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 			
 			
 		}//while
-
-		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
+		
+		return new Head(cpuId, timeStamp, title, suffStr);
+	}
+	
+	private final ITmfEvent handleUndefinedEvent(String line){
+		
+		Head head = parseHead(line);
+		
+		TmfTimestamp ts = new TmfTimestamp(head.timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
@@ -206,52 +233,16 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		fields[0] = tmfEventField;
 		
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
-		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(title, title, null), content, line, cpuId, title);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, line, head.cpuId, head.title);
 		
 		return event;
 	}
 	
-	private ITmfEvent handleSchedleWakeupEvent(String line){
+	private final ITmfEvent handleSchedleWakeupEvent(String line){
 		
-		@SuppressWarnings("unchecked")
-		List<String> list = StringUtil.splitAsList(line, "sched_wakeup: ");
-		
-		String prefStr = list.get(0);
-		String suffStr = list.get(1);
-		
-		/* Suppose cores not more than 100 */
-		String subPrefStr = (String) StringUtil.splitAsList(prefStr, "[0").get(1);
-		
-		@SuppressWarnings("resource")
-		Scanner scan = new Scanner(subPrefStr);
-		
-		int count = 0;
-		
-		short cpuId = 0;
-		long timeStamp = 0L;
-		
-		while(scan.hasNext()){
-			
-			String sn = scan.next();
-			
-			switch(count){
-			
-			case 0:
-				sn = StringUtil.remove(sn, "]");
-				cpuId = Short.parseShort(sn);
-				break;
-			case 1:
-				sn = StringUtil.remove(sn, ":");
-				sn = StringUtil.remove(sn, ".");
-				timeStamp =Long.parseLong(sn);
-				break;
-			}
-			
-			count++;
-			
-		}//while
+		Head head = parseHead(line);
 
-		suffStr = suffStr.trim();
+		String suffStr = head.suffStr;
 		suffStr = StringUtil.replace(suffStr, "comm" , "||");
 		suffStr = StringUtil.replace(suffStr, "pid"  , "||");
 		suffStr = StringUtil.replace(suffStr, "prio" , "||");
@@ -261,9 +252,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		@SuppressWarnings("unchecked")
 		List<String> rlist = StringUtil.splitAsList(suffStr, "||=");
 		
-		final String title = "sched_wakeup";
-		
-		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
+		TmfTimestamp ts = new TmfTimestamp(head.timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 		
@@ -278,52 +267,16 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		fields[1] = tmfEventField_TID;
 		
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
-		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(title, title, null), content, suffStr, cpuId, title);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
 	
 	private ITmfEvent handleSchedleSwitchEvent(String line){
 		
-		@SuppressWarnings("unchecked")
-		List<String> list = StringUtil.splitAsList(line, "sched_switch: ");
+		Head head = parseHead(line);
 		
-		String prefStr = list.get(0);
-		String suffStr = list.get(1);
-		
-		/* Suppose cores not more than 100 */
-		String subPrefStr = (String) StringUtil.splitAsList(prefStr, "[0").get(1);
-		
-		@SuppressWarnings("resource")
-		Scanner scan = new Scanner(subPrefStr);
-		
-		int count = 0;
-		
-		short cpuId = 0;
-		long timeStamp = 0L;
-		
-		while(scan.hasNext()){
-			
-			String sn = scan.next();
-			
-			switch(count){
-			
-			case 0:
-				sn = StringUtil.remove(sn, "]");
-				cpuId = Short.parseShort(sn);
-				break;
-			case 1:
-				sn = StringUtil.remove(sn, ":");
-				sn = StringUtil.remove(sn, ".");
-				timeStamp =Long.parseLong(sn);
-				break;
-			}
-			
-			count++;
-			
-		}//while
-		
-		suffStr = suffStr.trim();
+		String suffStr = head.suffStr;
 		suffStr = StringUtil.replace(suffStr, "==>", "");
 		suffStr = StringUtil.replace(suffStr, "prev_comm" , "||");
 		suffStr = StringUtil.replace(suffStr, "prev_pid"  , "||");
@@ -336,13 +289,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		@SuppressWarnings("unchecked")
 		List<String> rlist = StringUtil.splitAsList(suffStr, "||=");
 		
-		String prevTask_Name_Id = rlist.get(1) +"-"+ rlist.get(2);
-		String nextTask_Name_Id = rlist.get(5) +"-"+ rlist.get(6);
-		
-		
-		final String title = "sched_switch";
-		
-		TmfTimestamp ts = new TmfTimestamp(timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
+		TmfTimestamp ts = new TmfTimestamp(head.timeStamp,ITmfTimestamp.NANOSECOND_SCALE);
 		Random rnd = new Random();
 		long payload = Long.valueOf(rnd.nextInt(10));
 
@@ -354,7 +301,6 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		final TmfEventField tmfEventField_NEXT_COMM = new TmfEventField(SystraceStrings.NEXT_COMM, rlist.get(5).trim(), null); //$NON-NLS-1$
 		final TmfEventField tmfEventField_NEXT_TID = new TmfEventField(SystraceStrings.NEXT_TID, Long.parseLong(rlist.get(6).trim()), null); //$NON-NLS-1$
 		
-		
 		// the field must be in an array
 		final TmfEventField[] fields = new TmfEventField[5];
 		fields[0] = tmfEventField;
@@ -365,7 +311,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		
 		final TmfEventField content = new TmfEventField(ITmfEventField.ROOT_FIELD_ID, null, fields);
 
-		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(title, title, null), content, suffStr, cpuId, title);
+		SystraceEvent event = new SystraceEvent(null, _currentRank, ts, String.valueOf(this._currentRank),new TmfEventType(head.title, head.title, null), content, suffStr, head.cpuId, head.title);
 		
 		return event;
 	}
