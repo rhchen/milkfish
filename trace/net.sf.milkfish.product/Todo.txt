@@ -1,5 +1,31 @@
 # Todo
 IRQ Handler
+# 20140506
+export ADBHOST=192.168.1.110
+adb root
+adb kill-server
+adb devices
+
+# 20140505
+mount -t debugfs none /sys/kernel/debug
+# Change to trace
+cd /sys/kernel/debug/tracing
+# Set buffer size
+echo 20480 > buffer_size_kb
+# Enable sched_switch
+echo 1 > events/sched/enable
+# Enable tracing
+echo 1 > tracing_on
+# stop tracing
+echo 0 > tracing_on
+# clear buffer
+echo > trace
+# diable all
+echo 0 > events/enable
+# enable All
+echo 1 > events/enable
+# dump to file
+cat trace > /sdcard/Download/FILE_NAME
 
 # 20140502
 1. The skipLines in SystraceService workarrounded
