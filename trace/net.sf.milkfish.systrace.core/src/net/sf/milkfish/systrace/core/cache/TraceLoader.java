@@ -237,9 +237,12 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 				
 				/* Get Timestamp, Ex. 50260.647833: */
 				sn = scan.next();
+				
+				if(sn.length() == 4) sn = scan.next();
+				
 				sn = StringUtil.remove(sn, ":");
 				sn = StringUtil.remove(sn, ".");
-				timeStamp =Long.parseLong(sn);
+				timeStamp =Long.parseLong(sn) * 1000L;
 				
 				/* Get Event Type Ex. sched_wakeup: */
 				sn = scan.next();

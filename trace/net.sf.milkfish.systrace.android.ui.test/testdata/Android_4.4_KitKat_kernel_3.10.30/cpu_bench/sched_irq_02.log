@@ -1,0 +1,164 @@
+# tracer: nop
+#
+# entries-in-buffer/entries-written: 153/9721   #P:1
+#
+#                              _-----=> irqs-off
+#                             / _----=> need-resched
+#                            | / _---=> hardirq/softirq
+#                            || / _--=> preempt-depth
+#                            ||| /     delay
+#           TASK-PID   CPU#  ||||    TIMESTAMP  FUNCTION
+#              | |       |   ||||       |         |
+   WindowManager-1327  [000] d..3  7640.201319: sched_stat_wait: comm=Binder_3 pid=1524 delay=71149 [ns]
+   WindowManager-1327  [000] d..3  7640.201320: sched_switch: prev_comm=WindowManager prev_pid=1327 prev_prio=116 prev_state=S ==> next_comm=Binder_3 next_pid=1524 next_prio=120
+        Binder_3-1524  [000] d..3  7640.201325: sched_stat_runtime: comm=Binder_3 pid=1524 runtime=10218 [ns] vruntime=795579779481 [ns]
+        Binder_3-1524  [000] d..3  7640.201328: sched_stat_runtime: comm=Binder_3 pid=1524 runtime=3345 [ns] vruntime=795579780043 [ns]
+        Binder_3-1524  [000] dN.3  7640.201331: sched_stat_runtime: comm=Binder_3 pid=1524 runtime=3186 [ns] vruntime=795579780578 [ns]
+        Binder_3-1524  [000] dN.3  7640.201333: sched_stat_wait: comm=Binder_3 pid=1524 delay=0 [ns]
+        Binder_3-1524  [000] d..3  7640.201457: sched_stat_runtime: comm=Binder_3 pid=1524 runtime=125826 [ns] vruntime=795579801700 [ns]
+        Binder_3-1524  [000] d..3  7640.201460: sched_stat_runtime: comm=Binder_3 pid=1524 runtime=3216 [ns] vruntime=795579804916 [ns]
+        Binder_3-1524  [000] dN.3  7640.201463: sched_stat_runtime: comm=Binder_3 pid=1524 runtime=2764 [ns] vruntime=795579807680 [ns]
+        Binder_3-1524  [000] dN.3  7640.201465: sched_stat_wait: comm=Binder_3 pid=1524 delay=0 [ns]
+        Binder_3-1524  [000] d..4  7640.201469: sched_stat_runtime: comm=Binder_3 pid=1524 runtime=5812 [ns] vruntime=795579813492 [ns]
+        Binder_3-1524  [000] d..4  7640.201470: sched_stat_sleep: comm=InputReader pid=1343 delay=210980 [ns]
+        Binder_3-1524  [000] d..4  7640.201472: sched_wakeup: comm=InputReader pid=1343 prio=112 success=1 target_cpu=000
+        Binder_3-1524  [000] d..3  7640.201486: sched_stat_runtime: comm=Binder_3 pid=1524 runtime=16631 [ns] vruntime=795579830123 [ns]
+        Binder_3-1524  [000] d..3  7640.201488: sched_stat_wait: comm=InputReader pid=1343 delay=16631 [ns]
+        Binder_3-1524  [000] d..3  7640.201489: sched_switch: prev_comm=Binder_3 prev_pid=1524 prev_prio=120 prev_state=S ==> next_comm=InputReader next_pid=1343 next_prio=112
+     InputReader-1343  [000] d..5  7640.201544: sched_stat_runtime: comm=InputReader pid=1343 runtime=57965 [ns] vruntime=795579833989 [ns]
+     InputReader-1343  [000] d..5  7640.201546: sched_stat_sleep: comm=InputDispatcher pid=1342 delay=2008669193 [ns]
+     InputReader-1343  [000] d..5  7640.201547: sched_wakeup: comm=InputDispatcher pid=1342 prio=112 success=1 target_cpu=000
+     InputReader-1343  [000] d..3  7640.201620: sched_stat_runtime: comm=InputReader pid=1343 runtime=75727 [ns] vruntime=795579846701 [ns]
+     InputReader-1343  [000] d..3  7640.201623: sched_stat_wait: comm=InputDispatcher pid=1342 delay=75727 [ns]
+     InputReader-1343  [000] d..3  7640.201625: sched_switch: prev_comm=InputReader prev_pid=1343 prev_prio=112 prev_state=S ==> next_comm=InputDispatcher next_pid=1342 next_prio=112
+ InputDispatcher-1342  [000] d..5  7640.201716: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=96379 [ns] vruntime=795579785442 [ns]
+ InputDispatcher-1342  [000] d..5  7640.201718: sched_stat_sleep: comm=system_server pid=1313 delay=2504181628 [ns]
+ InputDispatcher-1342  [000] d..5  7640.201720: sched_wakeup: comm=system_server pid=1313 prio=118 success=1 target_cpu=000
+ InputDispatcher-1342  [000] d..5  7640.201775: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=59241 [ns] vruntime=795579795387 [ns]
+ InputDispatcher-1342  [000] d..5  7640.201777: sched_stat_sleep: comm=PowerManagerSer pid=1340 delay=2504187529 [ns]
+ InputDispatcher-1342  [000] d..5  7640.201779: sched_wakeup: comm=PowerManagerSer pid=1340 prio=120 success=1 target_cpu=000
+ InputDispatcher-1342  [000] d..4  7640.201860: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=85023 [ns] vruntime=795579809660 [ns]
+ InputDispatcher-1342  [000] d..4  7640.201862: sched_stat_sleep: comm=Binder_4 pid=4268 delay=2009682494 [ns]
+ InputDispatcher-1342  [000] d..4  7640.201864: sched_wakeup: comm=Binder_4 pid=4268 prio=120 success=1 target_cpu=000
+ InputDispatcher-1342  [000] d..3  7640.201869: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=9091 [ns] vruntime=795579811186 [ns]
+ InputDispatcher-1342  [000] d..3  7640.201872: sched_stat_wait: comm=system_server pid=1313 delay=153355 [ns]
+ InputDispatcher-1342  [000] d..3  7640.201873: sched_switch: prev_comm=InputDispatcher prev_pid=1342 prev_prio=112 prev_state=S ==> next_comm=system_server next_pid=1313 next_prio=118
+   system_server-1313  [000] d..3  7640.201919: sched_stat_runtime: comm=system_server pid=1313 runtime=50121 [ns] vruntime=795579801624 [ns]
+   system_server-1313  [000] d..3  7640.201922: sched_stat_wait: comm=PowerManagerSer pid=1340 delay=144235 [ns]
+   system_server-1313  [000] d..3  7640.201923: sched_switch: prev_comm=system_server prev_pid=1313 prev_prio=118 prev_state=S ==> next_comm=PowerManagerSer next_pid=1340 next_prio=120
+ PowerManagerSer-1340  [000] d..3  7640.201972: sched_stat_runtime: comm=PowerManagerSer pid=1340 runtime=52972 [ns] vruntime=795579822235 [ns]
+ PowerManagerSer-1340  [000] d..3  7640.201975: sched_stat_wait: comm=Binder_4 pid=4268 delay=112184 [ns]
+ PowerManagerSer-1340  [000] d..3  7640.201976: sched_switch: prev_comm=PowerManagerSer prev_pid=1340 prev_prio=120 prev_state=S ==> next_comm=Binder_4 next_pid=4268 next_prio=120
+        Binder_4-4268  [000] d..3  7640.201998: sched_stat_runtime: comm=Binder_4 pid=4268 runtime=25983 [ns] vruntime=795579795246 [ns]
+        Binder_4-4268  [000] d..3  7640.202001: sched_stat_runtime: comm=Binder_4 pid=4268 runtime=3152 [ns] vruntime=795579795775 [ns]
+        Binder_4-4268  [000] dN.3  7640.202004: sched_stat_runtime: comm=Binder_4 pid=4268 runtime=2979 [ns] vruntime=795579796275 [ns]
+        Binder_4-4268  [000] dN.3  7640.202006: sched_stat_wait: comm=Binder_4 pid=4268 delay=0 [ns]
+        Binder_4-4268  [000] d..3  7640.202188: sched_stat_runtime: comm=Binder_4 pid=4268 runtime=183066 [ns] vruntime=795579827006 [ns]
+        Binder_4-4268  [000] d..3  7640.202192: sched_stat_runtime: comm=Binder_4 pid=4268 runtime=4545 [ns] vruntime=795579831551 [ns]
+        Binder_4-4268  [000] dN.3  7640.202195: sched_stat_runtime: comm=Binder_4 pid=4268 runtime=3076 [ns] vruntime=795579834627 [ns]
+        Binder_4-4268  [000] dN.3  7640.202197: sched_stat_wait: comm=Binder_4 pid=4268 delay=0 [ns]
+        Binder_4-4268  [000] d..4  7640.202201: sched_stat_runtime: comm=Binder_4 pid=4268 runtime=6247 [ns] vruntime=795579840874 [ns]
+        Binder_4-4268  [000] d..4  7640.202202: sched_stat_sleep: comm=InputDispatcher pid=1342 delay=332141 [ns]
+        Binder_4-4268  [000] d..4  7640.202205: sched_wakeup: comm=InputDispatcher pid=1342 prio=112 success=1 target_cpu=000
+        Binder_4-4268  [000] d..3  7640.202220: sched_stat_runtime: comm=Binder_4 pid=4268 runtime=19036 [ns] vruntime=795579859910 [ns]
+        Binder_4-4268  [000] d..3  7640.202223: sched_stat_wait: comm=InputDispatcher pid=1342 delay=19036 [ns]
+        Binder_4-4268  [000] d..3  7640.202224: sched_switch: prev_comm=Binder_4 prev_pid=4268 prev_prio=120 prev_state=S ==> next_comm=InputDispatcher next_pid=1342 next_prio=112
+ InputDispatcher-1342  [000] d..4  7640.202297: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=76396 [ns] vruntime=795579824011 [ns]
+ InputDispatcher-1342  [000] d..4  7640.202299: sched_stat_sleep: comm=Binder_2 pid=1397 delay=2009982467 [ns]
+ InputDispatcher-1342  [000] d..4  7640.202301: sched_wakeup: comm=Binder_2 pid=1397 prio=120 success=1 target_cpu=000
+ InputDispatcher-1342  [000] d..3  7640.202305: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=8784 [ns] vruntime=795579825486 [ns]
+ InputDispatcher-1342  [000] d..3  7640.202307: sched_stat_wait: comm=Binder_2 pid=1397 delay=8784 [ns]
+ InputDispatcher-1342  [000] d..3  7640.202308: sched_switch: prev_comm=InputDispatcher prev_pid=1342 prev_prio=112 prev_state=S ==> next_comm=Binder_2 next_pid=1397 next_prio=120
+        Binder_2-1397  [000] d..3  7640.202312: sched_stat_runtime: comm=Binder_2 pid=1397 runtime=6027 [ns] vruntime=795579775290 [ns]
+        Binder_2-1397  [000] d..3  7640.202314: sched_stat_runtime: comm=Binder_2 pid=1397 runtime=2351 [ns] vruntime=795579775685 [ns]
+        Binder_2-1397  [000] dN.3  7640.202316: sched_stat_runtime: comm=Binder_2 pid=1397 runtime=2331 [ns] vruntime=795579776076 [ns]
+        Binder_2-1397  [000] dN.3  7640.202317: sched_stat_wait: comm=Binder_2 pid=1397 delay=0 [ns]
+        Binder_2-1397  [000] d..3  7640.202388: sched_stat_runtime: comm=Binder_2 pid=1397 runtime=71785 [ns] vruntime=795579788126 [ns]
+        Binder_2-1397  [000] d..3  7640.202390: sched_stat_runtime: comm=Binder_2 pid=1397 runtime=2481 [ns] vruntime=795579790607 [ns]
+        Binder_2-1397  [000] dN.3  7640.202393: sched_stat_runtime: comm=Binder_2 pid=1397 runtime=2295 [ns] vruntime=795579792902 [ns]
+        Binder_2-1397  [000] dN.3  7640.202394: sched_stat_wait: comm=Binder_2 pid=1397 delay=0 [ns]
+        Binder_2-1397  [000] d..4  7640.202397: sched_stat_runtime: comm=Binder_2 pid=1397 runtime=4588 [ns] vruntime=795579797490 [ns]
+        Binder_2-1397  [000] d..4  7640.202398: sched_stat_sleep: comm=InputDispatcher pid=1342 delay=91858 [ns]
+        Binder_2-1397  [000] d..4  7640.202400: sched_wakeup: comm=InputDispatcher pid=1342 prio=112 success=1 target_cpu=000
+        Binder_2-1397  [000] d..3  7640.202411: sched_stat_runtime: comm=Binder_2 pid=1397 runtime=14078 [ns] vruntime=795579811568 [ns]
+        Binder_2-1397  [000] d..3  7640.202414: sched_stat_wait: comm=InputDispatcher pid=1342 delay=14078 [ns]
+        Binder_2-1397  [000] d..3  7640.202414: sched_switch: prev_comm=Binder_2 prev_pid=1397 prev_prio=120 prev_state=S ==> next_comm=InputDispatcher next_pid=1342 next_prio=112
+ InputDispatcher-1342  [000] d..5  7640.202515: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=103794 [ns] vruntime=795579842910 [ns]
+ InputDispatcher-1342  [000] d..5  7640.202517: sched_stat_sleep: comm=pal.androidterm pid=2384 delay=2009614160 [ns]
+ InputDispatcher-1342  [000] d..5  7640.202520: sched_wakeup: comm=pal.androidterm pid=2384 prio=120 success=1 target_cpu=000
+ InputDispatcher-1342  [000] d..5  7640.202530: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=14785 [ns] vruntime=795579845392 [ns]
+ InputDispatcher-1342  [000] d..5  7640.202531: sched_stat_sleep: comm=android.ui pid=1332 delay=2009972744 [ns]
+ InputDispatcher-1342  [000] d..5  7640.202533: sched_wakeup: comm=android.ui pid=1332 prio=118 success=1 target_cpu=000
+ InputDispatcher-1342  [000] d..3  7640.202617: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=86257 [ns] vruntime=795579859872 [ns]
+ InputDispatcher-1342  [000] d..3  7640.202620: sched_stat_wait: comm=pal.androidterm pid=2384 delay=101042 [ns]
+ InputDispatcher-1342  [000] d..3  7640.202621: sched_switch: prev_comm=InputDispatcher prev_pid=1342 prev_prio=112 prev_state=S ==> next_comm=pal.androidterm next_pid=2384 next_prio=120
+ pal.androidterm-2384  [000] d..5  7640.202776: sched_stat_runtime: comm=pal.androidterm pid=2384 runtime=159262 [ns] vruntime=795579928525 [ns]
+ pal.androidterm-2384  [000] d..5  7640.202779: sched_stat_sleep: comm=putmethod.latin pid=1466 delay=2010060784 [ns]
+ pal.androidterm-2384  [000] d..5  7640.202781: sched_wakeup: comm=putmethod.latin pid=1466 prio=120 success=1 target_cpu=000
+ pal.androidterm-2384  [000] d..3  7640.202851: sched_stat_runtime: comm=pal.androidterm pid=2384 runtime=75087 [ns] vruntime=795580003612 [ns]
+ pal.androidterm-2384  [000] d..3  7640.202855: sched_stat_wait: comm=android.ui pid=1332 delay=320606 [ns]
+ pal.androidterm-2384  [000] d..3  7640.202856: sched_switch: prev_comm=pal.androidterm prev_pid=2384 prev_prio=120 prev_state=S ==> next_comm=android.ui next_pid=1332 next_prio=118
+      android.ui-1332  [000] d..5  7640.202928: sched_stat_runtime: comm=android.ui pid=1332 runtime=76690 [ns] vruntime=795579818778 [ns]
+      android.ui-1332  [000] d..5  7640.202929: sched_stat_sleep: comm=InputDispatcher pid=1342 delay=311039 [ns]
+      android.ui-1332  [000] d..5  7640.202931: sched_wakeup: comm=InputDispatcher pid=1342 prio=112 success=1 target_cpu=000
+      android.ui-1332  [000] d..3  7640.202951: sched_stat_runtime: comm=android.ui pid=1332 runtime=23286 [ns] vruntime=795579833813 [ns]
+      android.ui-1332  [000] d..3  7640.202953: sched_stat_wait: comm=putmethod.latin pid=1466 delay=175063 [ns]
+      android.ui-1332  [000] d..3  7640.202954: sched_switch: prev_comm=android.ui prev_pid=1332 prev_prio=118 prev_state=S ==> next_comm=putmethod.latin next_pid=1466 next_prio=120
+ putmethod.latin-1466  [000] d..5  7640.203045: sched_stat_runtime: comm=putmethod.latin pid=1466 runtime=93351 [ns] vruntime=795579862614 [ns]
+ putmethod.latin-1466  [000] d..5  7640.203081: sched_stat_sleep: comm=pal.androidterm pid=2384 delay=193327 [ns]
+ putmethod.latin-1466  [000] d..5  7640.203084: sched_wakeup: comm=pal.androidterm pid=2384 prio=120 success=1 target_cpu=000
+ putmethod.latin-1466  [000] d..3  7640.203116: sched_stat_runtime: comm=putmethod.latin pid=1466 runtime=71581 [ns] vruntime=795579934195 [ns]
+ putmethod.latin-1466  [000] d..3  7640.203118: sched_stat_wait: comm=InputDispatcher pid=1342 delay=188218 [ns]
+ putmethod.latin-1466  [000] d..3  7640.203119: sched_switch: prev_comm=putmethod.latin prev_pid=1466 prev_prio=120 prev_state=S ==> next_comm=InputDispatcher next_pid=1342 next_prio=112
+ InputDispatcher-1342  [000] d..3  7640.203185: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=69888 [ns] vruntime=795579871604 [ns]
+ InputDispatcher-1342  [000] d..3  7640.203188: sched_stat_wait: comm=pal.androidterm pid=2384 delay=141469 [ns]
+ InputDispatcher-1342  [000] d..3  7640.203189: sched_switch: prev_comm=InputDispatcher prev_pid=1342 prev_prio=112 prev_state=S ==> next_comm=pal.androidterm next_pid=2384 next_prio=120
+ pal.androidterm-2384  [000] d..5  7640.203368: sched_stat_runtime: comm=pal.androidterm pid=2384 runtime=182630 [ns] vruntime=795580186242 [ns]
+ pal.androidterm-2384  [000] d..5  7640.203370: sched_stat_sleep: comm=TermSession out pid=2403 delay=2128410640 [ns]
+ pal.androidterm-2384  [000] d..5  7640.203373: sched_wakeup: comm=TermSession out pid=2403 prio=120 success=1 target_cpu=000
+ pal.androidterm-2384  [000] d..5  7640.203396: sched_stat_runtime: comm=pal.androidterm pid=2384 runtime=27412 [ns] vruntime=795580213654 [ns]
+ pal.androidterm-2384  [000] d..5  7640.203397: sched_stat_sleep: comm=InputDispatcher pid=1342 delay=210042 [ns]
+ pal.androidterm-2384  [000] dN.5  7640.203399: sched_wakeup: comm=InputDispatcher pid=1342 prio=112 success=1 target_cpu=000
+ pal.androidterm-2384  [000] dN.3  7640.203402: sched_stat_wait: comm=InputDispatcher pid=1342 delay=0 [ns]
+ pal.androidterm-2384  [000] d..3  7640.203403: sched_switch: prev_comm=pal.androidterm prev_pid=2384 prev_prio=120 prev_state=R+ ==> next_comm=InputDispatcher next_pid=1342 next_prio=112
+ InputDispatcher-1342  [000] d..3  7640.203453: sched_stat_runtime: comm=InputDispatcher pid=1342 runtime=57035 [ns] vruntime=795579881178 [ns]
+ InputDispatcher-1342  [000] d..3  7640.203455: sched_stat_wait: comm=TermSession out pid=2403 delay=84447 [ns]
+ InputDispatcher-1342  [000] d..3  7640.203456: sched_switch: prev_comm=InputDispatcher prev_pid=1342 prev_prio=112 prev_state=S ==> next_comm=TermSession out next_pid=2403 next_prio=120
+ TermSession out-2403  [000] d..4  7640.203519: sched_stat_sleep: comm=kworker/0:0 pid=4752 delay=2615924 [ns]
+ TermSession out-2403  [000] dN.4  7640.203522: sched_wakeup: comm=kworker/0:0 pid=4752 prio=120 success=1 target_cpu=000
+ TermSession out-2403  [000] dN.4  7640.203523: sched_wakeup: comm=TermSession out pid=2403 prio=120 success=1 target_cpu=000
+ TermSession out-2403  [000] dN.3  7640.203525: sched_stat_runtime: comm=TermSession out pid=2403 runtime=65323 [ns] vruntime=795579834586 [ns]
+ TermSession out-2403  [000] dN.3  7640.203526: sched_stat_wait: comm=kworker/0:0 pid=4752 delay=0 [ns]
+ TermSession out-2403  [000] d..3  7640.203527: sched_switch: prev_comm=TermSession out prev_pid=2403 prev_prio=120 prev_state=R+ ==> next_comm=kworker/0:0 next_pid=4752 next_prio=120
+     kworker/0:0-4752  [000] d..4  7640.203558: sched_stat_sleep: comm=su pid=4362 delay=2128643136 [ns]
+     kworker/0:0-4752  [000] d..4  7640.203560: sched_stat_runtime: comm=kworker/0:0 pid=4752 runtime=39464 [ns] vruntime=540381265693 [ns]
+     kworker/0:0-4752  [000] d..4  7640.203562: sched_wakeup: comm=su pid=4362 prio=120 success=1 target_cpu=000
+     kworker/0:0-4752  [000] d..3  7640.203566: sched_stat_runtime: comm=kworker/0:0 pid=4752 runtime=8657 [ns] vruntime=540381274350 [ns]
+     kworker/0:0-4752  [000] d..3  7640.203568: sched_stat_wait: comm=su pid=4362 delay=8657 [ns]
+     kworker/0:0-4752  [000] d..3  7640.203569: sched_switch: prev_comm=kworker/0:0 prev_pid=4752 prev_prio=120 prev_state=S ==> next_comm=su next_pid=4362 next_prio=120
+              su-4362  [000] d..4  7640.203581: sched_stat_sleep: comm=kworker/0:0 pid=4752 delay=14995 [ns]
+              su-4362  [000] dN.4  7640.203583: sched_wakeup: comm=kworker/0:0 pid=4752 prio=120 success=1 target_cpu=000
+              su-4362  [000] dN.4  7640.203584: sched_wakeup: comm=su pid=4362 prio=120 success=1 target_cpu=000
+              su-4362  [000] dN.3  7640.203586: sched_stat_runtime: comm=su pid=4362 runtime=14995 [ns] vruntime=795579784258 [ns]
+              su-4362  [000] dN.3  7640.203587: sched_stat_wait: comm=kworker/0:0 pid=4752 delay=0 [ns]
+              su-4362  [000] d..3  7640.203588: sched_switch: prev_comm=su prev_pid=4362 prev_prio=120 prev_state=R+ ==> next_comm=kworker/0:0 next_pid=4752 next_prio=120
+     kworker/0:0-4752  [000] d..4  7640.203592: sched_stat_runtime: comm=kworker/0:0 pid=4752 runtime=11206 [ns] vruntime=540381285556 [ns]
+     kworker/0:0-4752  [000] d..4  7640.203593: sched_stat_sleep: comm=sh pid=4364 delay=2128807834 [ns]
+     kworker/0:0-4752  [000] d..4  7640.203595: sched_wakeup: comm=sh pid=4364 prio=120 success=1 target_cpu=000
+     kworker/0:0-4752  [000] d..3  7640.203597: sched_stat_runtime: comm=kworker/0:0 pid=4752 runtime=4632 [ns] vruntime=540381290188 [ns]
+     kworker/0:0-4752  [000] d..3  7640.203598: sched_stat_wait: comm=sh pid=4364 delay=4632 [ns]
+     kworker/0:0-4752  [000] d..3  7640.203599: sched_switch: prev_comm=kworker/0:0 prev_pid=4752 prev_prio=120 prev_state=S ==> next_comm=sh next_pid=4364 next_prio=120
+              sh-4364  [000] d..4  7640.203612: sched_stat_runtime: comm=sh pid=4364 runtime=14887 [ns] vruntime=540381256111 [ns]
+              sh-4364  [000] d..4  7640.203613: sched_stat_sleep: comm=kworker/0:0 pid=4752 delay=14887 [ns]
+              sh-4364  [000] d..4  7640.203615: sched_wakeup: comm=kworker/0:0 pid=4752 prio=120 success=1 target_cpu=000
+              sh-4364  [000] d..4  7640.203616: sched_wakeup: comm=sh pid=4364 prio=120 success=1 target_cpu=000
+              sh-4364  [000] d.h1  7640.203647: softirq_raise: vec=1 [action=TIMER]
+              sh-4364  [000] d.h1  7640.203649: softirq_raise: vec=9 [action=RCU]
+              sh-4364  [000] d.h2  7640.203653: sched_stat_runtime: comm=sh pid=4364 runtime=43339 [ns] vruntime=540381299450 [ns]
+              sh-4364  [000] ..s1  7640.203672: softirq_entry: vec=1 [action=TIMER]
+              sh-4364  [000] ..s1  7640.203675: softirq_exit: vec=1 [action=TIMER]
+              sh-4364  [000] ..s1  7640.203675: softirq_entry: vec=9 [action=RCU]
+              sh-4364  [000] d.H5  7640.203726: sched_stat_runtime: comm=sh pid=4364 runtime=73528 [ns] vruntime=540381372978 [ns]
+              sh-4364  [000] d.H5  7640.203727: sched_stat_sleep: comm=rcu_preempt pid=8 delay=899926689 [ns]
+              sh-4364  [000] d.H5  7640.203730: sched_wakeup: comm=rcu_preempt pid=8 prio=120 success=1 target_cpu=000
+              sh-4364  [000] ..s1  7640.203733: softirq_exit: vec=9 [action=RCU]
