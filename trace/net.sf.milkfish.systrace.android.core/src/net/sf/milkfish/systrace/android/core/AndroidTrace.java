@@ -1,16 +1,7 @@
 package net.sf.milkfish.systrace.android.core;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileChannel.MapMode;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -20,12 +11,12 @@ import net.sf.milkfish.systrace.core.event.ISystraceEvent;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
 import net.sf.milkfish.systrace.core.pipe.impl.TracePipe;
 import net.sf.milkfish.systrace.core.service.ISystraceService;
+import net.sf.milkfish.systrace.core.service.impl.SystraceService;
 import net.sf.milkfish.systrace.core.state.SystraceStateProvider;
 import net.sf.milkfish.systrace.core.state.SystraceStrings;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -34,21 +25,14 @@ import org.eclipse.linuxtools.tmf.core.event.ITmfEventField;
 import org.eclipse.linuxtools.tmf.core.event.TmfEventField;
 import org.eclipse.linuxtools.tmf.core.event.TmfEventType;
 import org.eclipse.linuxtools.tmf.core.exceptions.TmfTraceException;
-import org.eclipse.linuxtools.tmf.core.request.ITmfDataRequest.ExecutionType;
-import org.eclipse.linuxtools.tmf.core.request.TmfEventRequest;
-import org.eclipse.linuxtools.tmf.core.signal.TmfSignalHandler;
-import org.eclipse.linuxtools.tmf.core.signal.TmfSignalManager;
-import org.eclipse.linuxtools.tmf.core.signal.TmfTraceSelectedSignal;
 import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateProvider;
 import org.eclipse.linuxtools.tmf.core.statesystem.ITmfStateSystem;
 import org.eclipse.linuxtools.tmf.core.statesystem.TmfStateSystemFactory;
 import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
-import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimeRange;
 import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimestamp;
 import org.eclipse.linuxtools.tmf.core.trace.ITmfContext;
 import org.eclipse.linuxtools.tmf.core.trace.ITmfEventParser;
 import org.eclipse.linuxtools.tmf.core.trace.ITmfLocation;
-import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 import org.eclipse.linuxtools.tmf.core.trace.TmfContext;
 import org.eclipse.linuxtools.tmf.core.trace.TmfLongLocation;
 import org.eclipse.linuxtools.tmf.core.trace.TmfTrace;
@@ -64,18 +48,10 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
     
 	public static final String PLUGIN_ID = "net.sf.milkfish.systrace.android.core";
 
-	private static final int CHUNK_SIZE = 65536; // seems fast on MY system
-	private static final int EVENT_SIZE = 8; // according to spec
-
 	private TmfLongLocation fCurrentLocation;
 	private static final TmfLongLocation NULLLOCATION = new TmfLongLocation((Long) null);
 	private static final TmfContext NULLCONTEXT = new TmfContext(NULLLOCATION,-1L);
 
-	private long fOffset;
-	
-	private String[] fEventTypes = new String[] { "sched_switch", "irq" }; // 64 values of types according to //$NON-NLS-1$;
-	private FileChannel fFileChannel;
-	private MappedByteBuffer fMappedByteBuffer;
 	private File fFile;
 	
 	/* Reference to class ModelAddon, there inject the require instance */
@@ -118,31 +94,29 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 		super.initTrace(resource, path, type);
 
-		fFile = new File(path);
-
-		long fSize = fFile.length();
-
-		if (fSize == 0) throw new TmfTraceException("file is empty"); //$NON-NLS-1$
-		
-		int nbEvents = 1 + (int)fSize/1024/1024;
-		
-		/* A guess to number of events */
-		setNbEvents(nbEvents * 10000);
-		
-		if (getNbEvents() < 1) throw new TmfTraceException("Trace does not have any events"); //$NON-NLS-1$
-
 		try {
-
-			fFileChannel = new FileInputStream(fFile).getChannel();
 			
-			seek(0);
+			fFile = new File(path);
+			
+			long fSize = SystraceService.getFileSize(fFile.toURI());
+		
+			if (fSize == 0) throw new TmfTraceException("file is empty"); //$NON-NLS-1$
+			
+			int nbEvents = 1 + (int)fSize/1024/1024;
+			
+			/* A guess to number of events */
+			setNbEvents(nbEvents * 10000);
+			
+			if (getNbEvents() < 1) throw new TmfTraceException("Trace does not have any events"); //$NON-NLS-1$
 
 			systraceService.addTrace(fFile.toURI());
 			
-		} catch (FileNotFoundException e) {
-			throw new TmfTraceException(e.getMessage());
+			seek(0);
+			
 		} catch (IOException e) {
-			throw new TmfTraceException(e.getMessage());
+			
+			e.printStackTrace();
+		
 		}
 		
 	}
@@ -173,9 +147,13 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 	@Override
 	public ITmfContext seekEvent(double ratio) {
+		
 		long rank = (long) (ratio * getNbEvents());
+		
 		try {
+			
 			seek(rank);
+		
 		} catch (IOException e) {
 			return NULLCONTEXT;
 		}
@@ -183,9 +161,15 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 	}
 
 	private void seek(long rank) throws IOException {
-		final long position = fOffset + (rank * EVENT_SIZE);
-		int size = Math.min((int) (fFileChannel.size() - position), CHUNK_SIZE);
-		fMappedByteBuffer = fFileChannel.map(MapMode.READ_ONLY, position, size);
+		
+		try {
+			
+			ITmfEvent event = systraceService.getTmfEvent(fFile.toURI(), rank);
+		
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -195,7 +179,7 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 
 		long pos = context.getRank();
 		
-		/* escapse on count == NBevents */
+		/* Escape on count == NBevents */
 		if(pos == getNbEvents()) return null;
 		
 		fCurrentLocation = new TmfLongLocation(pos);
@@ -220,13 +204,30 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		return null;
 	}
 	
+	/* State system is for flowcontrol view */
+	@Override
+    protected void buildStateSystem() throws TmfTraceException {
+        super.buildStateSystem();
+
+        /* Build the state system specific to LTTng kernel traces */
+        String directory = TmfTraceManager.getSupplementaryFileDir(this);
+        final File htFile = new File(directory + HISTORY_TREE_FILE_NAME);
+        final ITmfStateProvider htInput = new SystraceStateProvider(this);
+
+        ITmfStateSystem ss = TmfStateSystemFactory.newFullHistory(htFile, htInput, false);
+        fStateSystems.put(STATE_ID, ss);
+    }
+	
+	/* Dummy Codes, could be removed */
+	private String[] fEventTypes = new String[] { "sched_switch", "irq" }; // 64 values of types according to //$NON-NLS-1$;
+	
 	public ITmfEvent parseEvent2(ITmfContext context) {
 
 		if ((context == null) || (context.getRank() == -1)) return null;
 
 		long pos = context.getRank();
 		
-		/* escapse on count == NBevents */
+		/* Escape on count == NBevents */
 		if(pos == getNbEvents()) return null;
 		
 		final String title = fEventTypes[0];
@@ -265,18 +266,4 @@ public class AndroidTrace extends TmfTrace implements ITmfEventParser {
 		
 		return event;
 	}
-
-	/* State system is for flowcontrol view */
-	@Override
-    protected void buildStateSystem() throws TmfTraceException {
-        super.buildStateSystem();
-
-        /* Build the state system specific to LTTng kernel traces */
-        String directory = TmfTraceManager.getSupplementaryFileDir(this);
-        final File htFile = new File(directory + HISTORY_TREE_FILE_NAME);
-        final ITmfStateProvider htInput = new SystraceStateProvider(this);
-
-        ITmfStateSystem ss = TmfStateSystemFactory.newFullHistory(htFile, htInput, false);
-        fStateSystems.put(STATE_ID, ss);
-    }
 }

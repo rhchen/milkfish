@@ -34,8 +34,8 @@ public class TraceCache implements RemovalListener<Integer, ImmutableMap<Long, I
 		traceLoader = new TraceLoader(fileUri, pageTable, rankTable);
 		
 		cache = CacheBuilder.newBuilder().
-				maximumSize(10).
-				expireAfterAccess(10, TimeUnit.SECONDS).
+				maximumSize(20).
+				expireAfterAccess(20, TimeUnit.SECONDS).
 				removalListener(this).
 				build(traceLoader);
 	}

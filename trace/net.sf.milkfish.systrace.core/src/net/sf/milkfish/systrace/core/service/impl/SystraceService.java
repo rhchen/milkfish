@@ -214,7 +214,7 @@ public class SystraceService implements ISystraceService{
 		
 	}
 	
-	private static long getFileSize(URI fileUri) throws IOException{
+	public static long getFileSize(URI fileUri) throws IOException{
 		
 		long size;
 		
