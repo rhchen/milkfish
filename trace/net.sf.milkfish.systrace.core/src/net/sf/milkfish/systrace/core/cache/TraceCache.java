@@ -1,7 +1,6 @@
 package net.sf.milkfish.systrace.core.cache;
 
 import java.net.URI;
-import java.nio.channels.FileChannel;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
