@@ -73,7 +73,7 @@ class XZSeekDecDemo {
                     System.exit(1);
                 }
 
-                System.out.write(buf, 0, size);
+                //System.out.write(buf, 0, size);
                 len -= size;
             }
         }

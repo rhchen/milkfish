@@ -1,5 +1,6 @@
 package net.sf.milkfish.systrace.core.cache;
 
+import java.net.URI;
 import java.nio.channels.FileChannel;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -28,9 +29,9 @@ public class TraceCache implements RemovalListener<Integer, ImmutableMap<Long, I
 	 * @param pageTable
 	 * @param rankTable
 	 */
-	public void init(FileChannel fileChannel, TreeBasedTable<Integer, Long, Long> pageTable, BiMap<Long, Integer> rankTable){
+	public void init(URI fileUri, TreeBasedTable<Integer, Long, Long> pageTable, BiMap<Long, Integer> rankTable){
 		
-		traceLoader = new TraceLoader(fileChannel, pageTable, rankTable);
+		traceLoader = new TraceLoader(fileUri, pageTable, rankTable);
 		
 		cache = CacheBuilder.newBuilder().
 				maximumSize(10).

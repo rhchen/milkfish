@@ -4,14 +4,11 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.SortedMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.regex.Pattern;
 
 import net.sf.commonstringutil.StringUtil;
 import net.sf.milkfish.systrace.core.event.impl.SystraceEvent;
@@ -24,11 +21,9 @@ import org.eclipse.linuxtools.tmf.core.event.TmfEventField;
 import org.eclipse.linuxtools.tmf.core.event.TmfEventType;
 import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
 import org.eclipse.linuxtools.tmf.core.timestamp.TmfTimestamp;
-import org.eclipse.linuxtools.tmf.core.trace.TmfLongLocation;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.collect.Lists;
@@ -37,7 +32,7 @@ import com.google.common.collect.TreeBasedTable;
 
 public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEvent>>{
 
-	private FileChannel _fileChannel;
+	private URI _fileUri;
 	
 	/*
 	 * RankTables is used to store which rank of data store in which page
@@ -57,10 +52,10 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 	
 	private long _currentRank;
 	
-	public TraceLoader(FileChannel fileChannel, TreeBasedTable<Integer, Long, Long> pageTable, BiMap<Long, Integer> rankTable) {
+	public TraceLoader(URI fileUri, TreeBasedTable<Integer, Long, Long> pageTable, BiMap<Long, Integer> rankTable) {
 		
 		super();
-		this._fileChannel = fileChannel;
+		this._fileUri = fileUri;
 		this._pageTable   = pageTable;
 		this._rankTable   = rankTable;
 	}
@@ -82,11 +77,7 @@ public class TraceLoader extends CacheLoader<Integer, ImmutableMap<Long, ITmfEve
 		long positionEnd   = map.get(positionStart);
 		long bufferSize = positionEnd - positionStart;
 		
-		MappedByteBuffer mmb = _fileChannel.map(FileChannel.MapMode.READ_ONLY, positionStart, bufferSize);
-
-		byte[] buffer = new byte[(int) bufferSize];
-		
-		mmb.get(buffer);
+		byte[] buffer = SystraceService.getByteArray(this._fileUri, positionStart, bufferSize);
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
 		

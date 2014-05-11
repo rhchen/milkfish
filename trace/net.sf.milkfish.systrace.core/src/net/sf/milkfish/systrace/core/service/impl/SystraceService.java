@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.MappedByteBuffer;
@@ -38,6 +39,10 @@ import org.eclipse.linuxtools.tmf.core.event.ITmfEventType;
 import org.eclipse.linuxtools.tmf.core.event.TmfEvent;
 import org.eclipse.linuxtools.tmf.core.timestamp.ITmfTimestamp;
 import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
+import org.tukaani.xz.SeekableFileInputStream;
+import org.tukaani.xz.SeekableXZInputStream;
+import org.tukaani.xz.XZFormatException;
+import org.tukaani.xz.XZInputStream;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.google.common.collect.BiMap;
@@ -140,13 +145,9 @@ public class SystraceService implements ISystraceService{
 	
 	private void createCacheTable(URI fileUri) throws FileNotFoundException{
 		
-		FileInputStream fis = new FileInputStream(fileUri.getPath());
-		
-		FileChannel fileChannel = fis.getChannel();
-		
 		TraceCache cache = new TraceCache();
 		
-		cache.init(fileChannel, pageTables.get(fileUri), rankTables.get(fileUri));
+		cache.init(fileUri, pageTables.get(fileUri), rankTables.get(fileUri));
 		
 		cacheTables.put(fileUri, cache);
 		
@@ -186,6 +187,106 @@ public class SystraceService implements ISystraceService{
 		
 		return data.get(rank);
 	}
+	
+	private static boolean isXZ(URI fileUri){
+		
+		boolean isXZ = false;
+		
+		try{
+			
+			InputStream fis = new XZInputStream(new FileInputStream(fileUri.getPath()));
+			
+			fis.close();
+			
+			isXZ = true;
+			
+		}catch(XZFormatException e){
+			
+			//e.printStackTrace();
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		return isXZ;
+		
+	}
+	
+	private static long getFileSize(URI fileUri) throws IOException{
+		
+		long size;
+		
+		boolean isXz = isXZ(fileUri);
+		
+		if(isXz){
+			
+			SeekableFileInputStream fis = new SeekableFileInputStream(fileUri.getPath());
+	        
+			SeekableXZInputStream in = new SeekableXZInputStream(fis);
+			
+			size = in.length();
+			
+			fis.close();
+			
+			in.close();
+			
+		}else{
+			
+			FileInputStream fis = new FileInputStream(fileUri.getPath());
+			
+			FileChannel fileChannel = fis.getChannel();
+			
+			size = fileChannel.size();
+			
+			fis.close();
+			
+			fileChannel.close();
+		}
+		
+		return size;
+	}
+	
+	public static byte[] getByteArray(URI fileUri, long positionStart, long bufferSize) throws IOException{
+		
+		boolean isXz = isXZ(fileUri);
+		
+		byte[] buffer = new byte[(int) bufferSize];
+		
+		if(isXz){
+			
+			SeekableFileInputStream fis = new SeekableFileInputStream(fileUri.getPath());
+	        
+			SeekableXZInputStream in = new SeekableXZInputStream(fis);
+	        
+			in.seek(positionStart);
+			
+			in.read(buffer, 0, (int)bufferSize);
+			
+			fis.close();
+			
+			in.close();
+			
+		}else{
+			
+			FileInputStream fis = new FileInputStream(fileUri.getPath());
+
+			FileChannel fileChannel = fis.getChannel();
+			
+			MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, positionStart, bufferSize);
+
+			mmb.get(buffer);
+			
+			fis.close();
+			
+			fileChannel.close();
+		
+		}
+		
+		return buffer;
+	}
+	
 	/**
 	 * 
 	 * Create page table to avoid load all trace data into memory
@@ -195,11 +296,7 @@ public class SystraceService implements ISystraceService{
 	 */
 	private void createPageTable(URI fileUri) throws IOException{
 		
-		FileInputStream fis = new FileInputStream(fileUri.getPath());
-		
-		FileChannel fileChannel = fis.getChannel();
-		
-		long size = fileChannel.size();
+		long size = SystraceService.getFileSize(fileUri);
 		
 		int M_BYTE = 1024 * 1024;
 		
@@ -215,17 +312,12 @@ public class SystraceService implements ISystraceService{
 				
 		for(int i=0; i<=pages; i++){
 			
-			long limit = (i+1) * M_BYTE > fileChannel.size() ? fileChannel.size() : (i+1) * M_BYTE;
+			long limit = (i+1) * M_BYTE > size ? size : (i+1) * M_BYTE;
 			
 			//long bufferSize = limit - (i * M_BYTE);
 			long bufferSize = limit - positionStart;
 			
-			//MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, i * M_BYTE, bufferSize);
-			MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, positionStart, bufferSize);
-
-			byte[] buffer = new byte[(int) bufferSize];
-			
-			mmb.get(buffer);
+			byte[] buffer = SystraceService.getByteArray(fileUri, positionStart, bufferSize);
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
 			//CRLFLineReader in = new CRLFLineReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
@@ -259,7 +351,6 @@ public class SystraceService implements ISystraceService{
 		
 		rankTables.put(fileUri, rankTable);
 		
-		fis.close();
 	}
 	
 	public static boolean isLineMatch(String line){
