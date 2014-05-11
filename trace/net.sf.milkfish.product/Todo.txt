@@ -1,6 +1,10 @@
 # Todo
 IRQ Handler
 
+# 20140511
+The file parse for .xz format use static method in SystraceService
+Should be abstract to a factory
+
 # 20140508
 Add XZ compress lib
 
